@@ -135,3 +135,11 @@
         padding: 10px 0px 9px;
     }
 }
+
+.or {
+  display: none;
+}
+
+.login-form {
+  display: none;
+}

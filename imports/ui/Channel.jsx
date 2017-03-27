@@ -7,12 +7,56 @@ import {Meteor} from 'meteor/meteor';
 //probably not needed
 // import { channelSongs } from '../api/channelSongs/channelSongs.js';
 import ChannelSong            from './components/ChannelSong.jsx';
+import ChannelChat            from './components/ChannelChat.jsx';
+import {ChannelChats}           from '../api/channelChat/channelChats.js';
 import SongSearchResultsItem  from './components/SongSearchResultsItem.jsx';
 import SearchSong             from './components/SearchSong.jsx';
 
 
 // Channels component - represents the rendering of channels
 export default class Channel extends Component {
+
+  renderChat(context) {
+      let filteredTasks = context.props.channelChat;
+      console.log(filteredTasks);
+      let currentChannel = context.props.channels[0];
+      console.log(currentChannel);
+      return filteredTasks.map((task) => {
+          const currentUserId = context.props.currentUser && context.props.currentUser._id;
+          const showPrivateButton = task.owner === currentUserId;
+
+          return (
+              <ChannelChat
+                  key={task._id}
+                  channel={currentChannel}
+                  channelChat={task}
+                  showPrivateButton={showPrivateButton}
+              />
+          );
+      });
+  }
+
+  handleSubmit(event) {
+        event.preventDefault();
+        // Find the text field via the React ref
+        const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
+        let channelId = this.props.channels[0]._id;
+        /*
+        ChannelChats.insert({
+            text,
+            createdAt: new Date(), // current time
+            owner: Meteor.userId(),           // _id of logged in user
+            username: Meteor.user().username,  // username of logged in user
+        });*/
+        // Clear form
+        ReactDOM.findDOMNode(this.refs.textInput).value = '';
+        try {
+          Meteor.call('channelChats.insert', channelId, text);
+
+        }catch(e){
+          console.log('lol');
+        }
+    }
 
     renderChannelSongs() {
 // console.log('loadingFlag',this.props.loading);
@@ -73,8 +117,8 @@ export default class Channel extends Component {
         this.dragged.style.display = "none";
         this.over = e.target;
     }
-     renderChannelName(){
-         let currentChannel = this.props.channels[0];
+     renderChannelName(context){
+         let currentChannel = context.props.channels[0];
          const name = currentChannel.text;
          const user = currentChannel.username;
 
@@ -86,7 +130,7 @@ export default class Channel extends Component {
     render() {
         return (
             <div className="componentWrapper">
-                {this.renderChannelName()}
+                {this.renderChannelName(this)}
                 <div className="col-md-4">
                     <ul
                         className="event-list"
@@ -100,6 +144,32 @@ export default class Channel extends Component {
                     <div className="list-group">
                         {this.renderSearchResults()}
                     </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="panel panel-default">
+                    <div className="panel-heading">
+                      <h3 className="panel-title">Chat !!</h3>
+                    </div>
+                    <div className="panel-body panel-chat">
+                      <ul className="list-group">
+                      {this.renderChat(this)}
+                      { this.props.currentUser ?
+                          <li className="list-group-item">
+                          <form className="form-group" onSubmit={this.handleSubmit.bind(this)} >
+                          <div className="input-group">
+                          <span className="input-group-addon">New message</span>
+                          <input
+                          className="form-control"
+                          type="text"
+                          ref="textInput"
+                          placeholder="Entrer un message"
+                          />
+                          </div>
+                          </form></li> :''
+                        }
+                      </ul>
+                    </div>
+                  </div>
                 </div>
             </div>
 
@@ -115,4 +185,5 @@ Channel.propTypes = {
     searchResults: PropTypes.array.isRequired,
     countOfChannelSongs: PropTypes.number,
     currentUser: PropTypes.object,
+    channelChat : PropTypes.array.isRequired,
 };
