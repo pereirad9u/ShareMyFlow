@@ -135,6 +135,7 @@
         padding: 10px 0px 9px;
     }
 }
+
 .well {
     min-height: 20px!important;
     padding: 0px !important;
@@ -185,4 +186,12 @@
 }
 .head{
     margin-bottom: 2% !important;
+}
+
+.or {
+  display: none;
+}
+
+.login-form {
+  display: none;
 }

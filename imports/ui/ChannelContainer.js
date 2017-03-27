@@ -6,6 +6,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Channels } from '../api/channels/channels.js';
 import { ChannelSongs } from '../api/channelSongs/channelSongs.js';
 import { Songs } from '../api/Songs/methods.js';
+import { ChannelChats } from '../api/channelChat/channelChats.js';
 
 
 import Channel from './Channel.jsx';
@@ -32,10 +33,14 @@ export default ChannelContainer = createContainer(({_id}) => {
 
   //Get a count of channel songs for order incrementing
   const countOfChannelSongs = ChannelSongs.find({channelId: _id}).count();
+
+  //Get messages from the chat
+  const chat = ChannelChats.find({channelId: _id}).fetch();
     // artist filter: {artistName: searchVal}
   return {
     searchResults: searchResults,
     channelSong: relevantChannelSongs,
+    channelChat : chat,
     channels: singleChannel,
     loading,
     countOfChannelSongs: countOfChannelSongs,

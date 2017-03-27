@@ -19,9 +19,9 @@ export default class Nav extends Component {
             <ul className="nav navbar-nav">
               <li className="active"><a href="#">Link <span className="sr-only">(current)</span></a></li>
               <li><a href="#">Link</a></li>
-            </ul>
-            <ul className="nav navbar-nav navbar-right">
-              <li><AccountsUIWrapper /></li>
+              <ul className="nav navbar-nav navbar-right">
+                <li><AccountsUIWrapper /></li>
+              </ul>
             </ul>
           </div>
         </div>
