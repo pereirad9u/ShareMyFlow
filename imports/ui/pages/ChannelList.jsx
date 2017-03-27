@@ -36,19 +36,17 @@ export default class ChannelList extends Component {
           // {console.log('channel props',this.props)}
     return (
       <div className="componentWrapper">
-      <h3>Channel Rendering</h3>
 
+          { this.props.currentUser ?
+              <div className="col-lg-12 head"><h1>Channel list : <a className="btn icon-btn btn-primary pull-right" href={FlowHelpers.pathFor( 'newchannel' )}>Create new channel</a></h1></div>
+
+              : ''
+          }
       <ul>
         {this.renderChannels()}
       </ul>
 
 
-        { this.props.currentUser ?
-          <div className="container">
-            <a className='button' href={FlowHelpers.pathFor( 'newchannel' )}>Create a new channel</a>
-          </div>
-          : ''
-        }
 
 
       </div>

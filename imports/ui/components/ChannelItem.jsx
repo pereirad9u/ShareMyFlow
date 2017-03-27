@@ -25,23 +25,42 @@ export default class ChannelItem extends Component {
       private: this.props.channel.private,
     });
 
-    return (
-      <li className={channelClassName}>
-        <button className="delete" onClick={this.deleteThisChannel.bind(this)}>
-          &times;
-        </button>
+    const owner = this.props.showPrivateButton;
+    const dateFormat = require('dateformat');
 
-        <a href={FlowHelpers.pathFor( 'channel', {_id: this.props.channel._id} )} className="text">
-          <strong>{this.props.channel.username}</strong>: {this.props.channel.text}
-        </a>
-      </li>
-    );
+    let day = this.props.channel.createdAt;
+    day = dateFormat(day, 'dd/mm/yy HH:MM');
+
+    return (
+      // <li className={channelClassName}>
+      //     { owner ? <button className='delete' onClick={this.deleteThisChannel.bind(this)}> &times; </button>:''}
+      //
+      //   <a href={FlowHelpers.pathFor( 'channel', {_id: this.props.channel._id} )} className="text">
+      //     <strong>{this.props.channel.username}</strong>: {this.props.channel.text}
+      //   </a>
+      // </li>
+      <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div className="thumbnail">
+          <div className="caption">
+          <div className='col-lg-12 well well-add-card'>
+          <h4>{this.props.channel.text}</h4>
+      </div>
+      <div className='col-lg-12'>
+          <p>Create by {this.props.channel.username}, {day}</p>
+
+      </div>
+      <a href={FlowHelpers.pathFor( 'channel', {_id: this.props.channel._id} )} className="btn btn-primary btn-join">Join</a>
+              { owner ? <a onClick={this.deleteThisChannel.bind(this)} className="btn btn-danger">Delete</a>:''}
+
+          </div>
+          </div>
+          </div>
+
+  );
   }
 }
 
 ChannelItem.propTypes = {
-  // This component gets the channel to display through a React prop.
-  // We can use propTypes to indicate it is required
   channel: PropTypes.object.isRequired,
   showPrivateButton: React.PropTypes.bool.isRequired,
 };
