@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import {Meteor} from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
+
 // import { createContainer } from 'meteor/react-meteor-data';
 
 
@@ -20,9 +22,7 @@ export default class Channel extends Component {
 
   renderChat(context) {
       let filteredTasks = context.props.channelChat;
-      console.log(filteredTasks);
       let currentChannel = context.props.channels[0];
-      console.log(currentChannel);
       return filteredTasks.map((channelChat) => {
           const currentUserId = context.props.currentUser && context.props.currentUser._id;
           const showPrivateButton = channelChat.owner === currentUserId;
@@ -43,14 +43,7 @@ export default class Channel extends Component {
         // Find the text field via the React ref
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
         let channelId = this.props.channels[0]._id;
-        console.log(channelId);
-        /*
-        ChannelChats.insert({
-            text,
-            createdAt: new Date(), // current time
-            owner: Meteor.userId(),           // _id of logged in user
-            username: Meteor.user().username,  // username of logged in user
-        });*/
+
         // Clear form
         ReactDOM.findDOMNode(this.refs.textInput).value = '';
         try {
@@ -61,16 +54,24 @@ export default class Channel extends Component {
         }
     }
 
-    renderUsers(){
-      let users = this.props.channelUser;
-      //console.log(users);
+    renderUsers(context){
+
+      let users = Meteor.users.find().fetch();
+      console.log('log',users);
       return users.map((user)=>{
-        return (
-          <ChannelUser
-            key={user._id}
-            channelUser={user}
-          />
-        );
+          if (!this.props.loading) {
+              let currentChannel = context.props.channels[0]._id;
+              if (user.profile.current_channel === currentChannel){
+                  return (
+                      <ChannelUser
+                          key={user._id}
+                          channelUser={user}
+                      />
+                  );
+              }
+          }
+
+
       });
     }
 
@@ -112,10 +113,6 @@ export default class Channel extends Component {
 // console.log('countOfChannelSongs',this.props.countOfChannelSongs);
 
         return filteredSongs.map((song) => {
-//--------------this should be passed to the component as well for "who added this" validation
-// const currentUserId = this.props.currentUser && this.props.currentUser._id;
-// console.log('iteratingSong', song);
-
             // Get the count of songs in list and add one for input
             song.order = this.props.countOfChannelSongs + 1;
             return (
@@ -207,7 +204,7 @@ export default class Channel extends Component {
                     </div>
                     <div className="panel-body">
                       <ul className="list-group">
-                      {this.renderUsers()}
+                      {this.renderUsers(this)}
                       </ul>
                     </div>
                   </div>
@@ -226,6 +223,5 @@ Channel.propTypes = {
     searchResults: PropTypes.array.isRequired,
     countOfChannelSongs: PropTypes.number,
     currentUser: PropTypes.object,
-    channelChat : PropTypes.array.isRequired,
-    channelUser: PropTypes.array.isRequired,
+    channelChat : PropTypes.array.isRequired
 };
