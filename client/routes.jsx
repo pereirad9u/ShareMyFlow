@@ -1,5 +1,6 @@
 import React from 'react';
 import {mount} from 'react-mounter';
+import { Meteor } from 'meteor/meteor';
 // load AppMain, App, and Channel React components
 // import AppMain from '../imports/ui/AppMain.jsx';
 import App from '../imports/ui/layouts/App.jsx';
@@ -11,6 +12,11 @@ import ChannelContainer from '../imports/ui/ChannelContainer.js';
 
 FlowRouter.route('/', {
   action() {
+      Meteor.users.update(Meteor.userId(), {
+          $set: {
+              "profile.current_channel": null
+          }
+      });
     mount(App, {content: <ChannelListContainer />});
   }
 });
@@ -18,6 +24,7 @@ FlowRouter.route('/', {
 FlowRouter.route('/newchannel', {
   name: 'newchannel',
   action() {
+
     mount(App, {content: <NewChannel />});
   }
 });
@@ -34,7 +41,11 @@ FlowRouter.route('/channel/:_id', {
   action( params ) {
     //empty search var
     Session.set('searchVal','');
-
+      Meteor.users.update(Meteor.userId(), {
+          $set: {
+              "profile.current_channel": params._id
+          }
+      });
     mount(App, {
       content: <ChannelContainer {...params} />
     });
