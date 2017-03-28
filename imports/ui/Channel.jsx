@@ -21,15 +21,15 @@ export default class Channel extends Component {
       console.log(filteredTasks);
       let currentChannel = context.props.channels[0];
       console.log(currentChannel);
-      return filteredTasks.map((task) => {
+      return filteredTasks.map((channelChat) => {
           const currentUserId = context.props.currentUser && context.props.currentUser._id;
-          const showPrivateButton = task.owner === currentUserId;
+          const showPrivateButton = channelChat.owner === currentUserId;
 
           return (
               <ChannelChat
-                  key={task._id}
+                  key={channelChat._id}
                   channel={currentChannel}
-                  channelChat={task}
+                  channelChat={channelChat}
                   showPrivateButton={showPrivateButton}
               />
           );
@@ -41,6 +41,7 @@ export default class Channel extends Component {
         // Find the text field via the React ref
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
         let channelId = this.props.channels[0]._id;
+        console.log(channelId);
         /*
         ChannelChats.insert({
             text,
