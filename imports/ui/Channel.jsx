@@ -7,8 +7,10 @@ import {Meteor} from 'meteor/meteor';
 //probably not needed
 // import { channelSongs } from '../api/channelSongs/channelSongs.js';
 import ChannelSong            from './components/ChannelSong.jsx';
+import {ChannelChats}         from '../api/channelChat/channelChats.js';
 import ChannelChat            from './components/ChannelChat.jsx';
-import {ChannelChats}           from '../api/channelChat/channelChats.js';
+import {ChannelUsers}         from '../api/channelUser/channelUsers.js';
+import ChannelUser            from './components/ChannelUser.jsx';
 import SongSearchResultsItem  from './components/SongSearchResultsItem.jsx';
 import SearchSong             from './components/SearchSong.jsx';
 
@@ -57,6 +59,19 @@ export default class Channel extends Component {
         }catch(e){
           console.log('lol');
         }
+    }
+
+    renderUsers(){
+      let users = this.props.channelUser;
+      //console.log(users);
+      return users.map((user)=>{
+        return (
+          <ChannelUser
+            key={user._id}
+            channelUser={user}
+          />
+        );
+      });
     }
 
     renderChannelSongs() {
@@ -172,6 +187,19 @@ export default class Channel extends Component {
                     </div>
                   </div>
                 </div>
+
+                <div className="col-md-4">
+                  <div className="panel panel-default">
+                    <div className="panel-heading">
+                      <h3 className="panel-title">User list !!</h3>
+                    </div>
+                    <div className="panel-body">
+                      <ul className="list-group">
+                      {this.renderUsers()}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
             </div>
 
         );
@@ -187,4 +215,5 @@ Channel.propTypes = {
     countOfChannelSongs: PropTypes.number,
     currentUser: PropTypes.object,
     channelChat : PropTypes.array.isRequired,
+    channelUser: PropTypes.array.isRequired,
 };
