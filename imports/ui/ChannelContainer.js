@@ -27,6 +27,7 @@ export default ChannelContainer = createContainer(({_id}) => {
   //Get the channel information for the channel matching the id in the url
   const singleChannel = Channels.find({_id: _id}).fetch();
 
+
   //Get an array of songs matching the current channel
   const relevantChannelSongs = ChannelSongs.find({channelId: _id}).fetch();
 

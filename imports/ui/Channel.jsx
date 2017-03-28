@@ -145,6 +145,9 @@ export default class Channel extends Component {
                     <div className="list-group">
                         {this.renderSearchResults()}
                     </div>
+                    <div className="list-group">
+                        <audio src={"http://89.80.51.248:800"+this.props.channels[0].portServ} autoPlay="autoPlay" controls="controls" preload="none"></audio>
+                    </div>
                 </div>
                 <div className="col-md-4">
                   <div className="panel panel-default">

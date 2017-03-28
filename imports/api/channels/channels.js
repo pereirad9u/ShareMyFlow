@@ -31,15 +31,17 @@ Meteor.methods({
     if (! this.userId) {
       throw new Meteor.Error('not-authorized');
     }
-
+    const nbChannel = Channels.find().count();
+    let port = nbChannel;
     let username =Meteor.user().profile.display_name !== null?Meteor.user().profile.display_name:Meteor.user().profile.id;
 
 
-      Channels.insert({
-      text,
-      createdAt: new Date(),
-      owner: this.userId,
-      username: username,
+        Channels.insert({
+        text,
+        createdAt: new Date(),
+        owner: this.userId,
+        username: username,
+        portServ : port,
     });
   },
   'channels.remove'(taskId) {
