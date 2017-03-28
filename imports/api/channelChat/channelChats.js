@@ -16,13 +16,7 @@ if (Meteor.isServer) {
         });
     });
 
-    ChannelChats.allow({
-    'insert': function (userId,doc) {
-      /* user and doc checks ,
-      return true to allow insert */
-      return (userId && doc.owner === userId);
-    }
-  });
+
 }
 Meteor.methods({
     'channelChats.insert'(channelId, text) {
@@ -35,12 +29,12 @@ Meteor.methods({
         }
 
         text.username  = Meteor.user().profile.display_name !== null?Meteor.user().profile.display_name:Meteor.user().profile.id;
-        text.channelId = channelId;
         text.createdAt = new Date();
         text.owner     = this.userId;
 
         ChannelChats.insert({
             text,
+            channelId : channelId,
             reported : 0,
             reportedBy : new Array(),
         });
@@ -58,6 +52,7 @@ Meteor.methods({
         check(taskId, String);
         const task = ChannelChats.findOne(taskId);
         const user = Meteor.userId();
+        console.log(task);
 
         if(task.reportedBy.includes(user)==false){
             if(task.reported >= 10) {

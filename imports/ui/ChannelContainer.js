@@ -22,6 +22,8 @@ export default ChannelContainer = createContainer(({_id}) => {
 // console.log('containerID', _id);
   Meteor.subscribe('songs', searchValue);
 
+  Meteor.subscribe('channelChats');
+
   //Get the channel information for the channel matching the id in the url
   const singleChannel = Channels.find({_id: _id}).fetch();
 
@@ -35,12 +37,12 @@ export default ChannelContainer = createContainer(({_id}) => {
   const countOfChannelSongs = ChannelSongs.find({channelId: _id}).count();
 
   //Get messages from the chat
-  const chat = ChannelChats.find({channelId: _id}).fetch();
+  const relevantChannelChats = ChannelChats.find({channelId: _id}).fetch();
     // artist filter: {artistName: searchVal}
   return {
     searchResults: searchResults,
     channelSong: relevantChannelSongs,
-    channelChat : chat,
+    channelChat : relevantChannelChats,
     channels: singleChannel,
     loading,
     countOfChannelSongs: countOfChannelSongs,
