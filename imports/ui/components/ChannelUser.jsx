@@ -5,10 +5,11 @@ import { Meteor } from 'meteor/meteor';
 export default class ChannelUser extends Component {
 
   render(){
-    return (
+      let username = Meteor.user().profile.display_name !== null ? Meteor.user().profile.display_name:Meteor.user().profile.id;
+      return (
       <li className="list-group-item">
         <span className="text">
-          <strong>{this.props.channelUser.profile.id}</strong>
+          <strong>{username}</strong>
         </span>
       </li>
     );

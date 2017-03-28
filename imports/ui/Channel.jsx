@@ -140,7 +140,7 @@ export default class Channel extends Component {
         const user = currentChannel.username;
 
         return(
-          <h3 className="title-channel">Channel {name}, by {user} :</h3>
+          <h3 className="title-channel">Channel {name},<br/> by {user} :</h3>
         )
 
       }
@@ -173,7 +173,7 @@ export default class Channel extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-5">
                   <div className="panel panel-default">
                     <div className="panel-heading">
                       <h3 className="panel-title">Chat !!</h3>
@@ -200,7 +200,7 @@ export default class Channel extends Component {
                   </div>
                 </div>
 
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <div className="panel panel-default">
                     <div className="panel-heading">
                       <h3 className="panel-title">User list !!</h3>
