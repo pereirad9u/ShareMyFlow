@@ -28,15 +28,16 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
-        text.username  = Meteor.user().profile.display_name !== null?Meteor.user().profile.display_name:Meteor.user().profile.id;
-        text.createdAt = new Date();
-        text.owner     = this.userId;
+
 
         ChannelChats.insert({
             text,
-            channelId : channelId,
-            reported : 0,
+            channelId  : channelId,
+            reported   : 0,
             reportedBy : new Array(),
+            username   : Meteor.user().profile.display_name !== null?Meteor.user().profile.display_name:Meteor.user().profile.id,
+            createdAt  : new Date(),
+            owner      : this.userId,
         });
     },
     'channelChat.remove'(taskId) {

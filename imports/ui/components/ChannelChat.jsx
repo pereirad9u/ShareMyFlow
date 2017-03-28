@@ -28,9 +28,6 @@ export default class ChannelChat extends Component {
         Meteor.call('channelChat.remove', this.props.channelChat._id);
     }
 
-    togglePrivate() {
-        Meteor.call('channelChat.setPrivate', this.props.channelChat._id, ! this.props.channelChat.private);
-    }
 
 
     render() {
@@ -43,7 +40,7 @@ export default class ChannelChat extends Component {
         }
         const isReport=this.props.channelChat.reportedBy.includes(Meteor.userId()) ;
         const dateFormat = require('dateformat');
-        dateFormat.masks.hammerTime = 'HH:MM ';
+        dateFormat.masks.hammerTime = 'HH:MM';
         const date = dateFormat(this.props.channelChat.createdAt, "hammerTime");
         return (
             <li className="list-group-item">
@@ -61,14 +58,14 @@ export default class ChannelChat extends Component {
                            title="signaler ce message"
                         > </i>
 
-                <label>{this.props.channelChat.reported}</label>
-                <label>({date})</label>
+                <label className="report">{this.props.channelChat.reported} </label>
+                <label> ({date}) </label>
 
 
 
 
                 <span className="text">
-                 <strong>{this.props.channelChat.username}</strong>: {this.props.channelChat.text}
+                 <strong> {this.props.channelChat.username} </strong>: {this.props.channelChat.text}
                 </span>
                 <div style={ {float:"left", clear: "both"} } ref={(el) => { this.messagesEnd = el; }}></div>
             </li>

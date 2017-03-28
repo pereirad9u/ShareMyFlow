@@ -1,5 +1,6 @@
 @import url("http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,400italic");
 .title-channel{
+    margin-top: 0;
     margin-bottom: 1%;
 }
 .event-list {
@@ -194,4 +195,15 @@
 
 .login-form {
   display: none;
+}
+
+.delete{
+    cursor: pointer;
+}
+
+i{
+    cursor: pointer;
+}
+.report{
+    margin-right: 1%;
 }
