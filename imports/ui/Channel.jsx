@@ -134,32 +134,44 @@ export default class Channel extends Component {
         this.over = e.target;
     }
      renderChannelName(context){
-         let currentChannel = context.props.channels[0];
-         const name = currentChannel.text;
-         const user = currentChannel.username;
+      if(!this.props.loading){
+        let currentChannel = context.props.channels[0];
+        const name = currentChannel.text;
+        const user = currentChannel.username;
 
-         return(
-             <h3 className="title-channel">Channel {name}, by {user} :</h3>
-         )
+        return(
+          <h3 className="title-channel">Channel {name}, by {user} :</h3>
+        )
+
+      }
+
      }
 
     render() {
         return (
             <div className="componentWrapper">
-                {this.renderChannelName(this)}
                 <div className="col-md-4">
-                    <ul
+                  <div className="panel panel-default">
+                    <div className="panel-heading">
+                      <h3 className="panel-title">
+                        {this.renderChannelName(this)}
+                      </h3>
+                    </div>
+                    <div className="panel-body">
+                      <ul
                         className="event-list"
                         onDragOver={this.dragOver}
-                    >
+                        >
                         {this.renderChannelSongs()}
-                    </ul>
+                      </ul>
 
-                    <SearchSong />
+                      <SearchSong />
 
-                    <div className="list-group">
+                      <div className="list-group">
                         {this.renderSearchResults()}
+                      </div>
                     </div>
+                  </div>
                 </div>
                 <div className="col-md-4">
                   <div className="panel panel-default">
