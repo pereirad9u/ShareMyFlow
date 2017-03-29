@@ -13,6 +13,7 @@ import SongSearchResultsItem  from './components/SongSearchResultsItem.jsx';
 import SearchSong             from './components/SearchSong.jsx';
 
 
+
 // Channels component - represents the rendering of channels
 export default class Channel extends Component {
 

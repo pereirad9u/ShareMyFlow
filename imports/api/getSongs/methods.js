@@ -23,6 +23,8 @@ Meteor.methods({
 });
 
 
+
+
 var checkTokenRefreshed = function(response, api) {
   if (response.error && response.error.statusCode === 401) {
     api.refreshAndUpdateAccessToken();
