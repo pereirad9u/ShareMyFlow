@@ -6,8 +6,12 @@ import { Meteor } from 'meteor/meteor';
 import App from '../imports/ui/layouts/App.jsx';
 import ChannelListContainer from '../imports/ui/containers/ChannelListContainer.js';
 
+import Channel from '../imports/ui/Channel.jsx';
 import NewChannel from '../imports/ui/NewChannel.jsx';
 import ChannelContainer from '../imports/ui/ChannelContainer.js';
+import NewChannelContainer from '../imports/ui/NewChannelContainer.js';
+import {SpotifyWebApi} from 'meteor/xinranxiao:spotify-web-api'
+
 
 
 FlowRouter.route('/', {
@@ -25,7 +29,13 @@ FlowRouter.route('/newchannel', {
   name: 'newchannel',
   action() {
 
-    mount(App, {content: <NewChannel />});
+
+  Meteor.call('getSavedPlaylists', function(err, response) {
+    console.log(response);
+    Session.set('playlistCount', response.total);
+    Session.set('currentPlaylists', response.items);
+  });
+    mount(App, {content: <NewChannelContainer />});
   }
 });
 
@@ -45,6 +55,11 @@ FlowRouter.route('/channel/:_id', {
           $set: {
               "profile.current_channel": params._id
           }
+      });
+
+      Meteor.call('getPlaylistTracks', params._id, function(err, response){
+        console.log("erreur : ",err);
+        console.log("reponse : ",response);
       });
     mount(App, {
       content: <ChannelContainer {...params} />

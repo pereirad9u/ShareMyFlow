@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { HTTP } from 'meteor/http';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
@@ -21,7 +22,7 @@ Meteor.methods({
   'channelSongs.removeAllChannelSongs'() {
     ChannelSongs.remove({});
   },
-  'channelSongs.insert'(channelId, text) {
+  'channelSongs.insert'(channelId, text, channelPort) {
     check(channelId, String);
     check(text, Object);
 
@@ -37,6 +38,9 @@ Meteor.methods({
     ChannelSongs.insert(
       text
     );
+    //ne faites pas sa chez vous
+    HTTP.post("http://89.80.51.248:606"+channelPort+"/add",{data:{"entry":text.url},options:{headers:'Access-Control-Allow-Origin : *'}},function (error,result){ if (!error){console.log("ok")}})
+
   },
   'channelSongs.remove'(taskId) {
     check(taskId, String);
