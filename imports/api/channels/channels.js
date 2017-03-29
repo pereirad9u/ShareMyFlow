@@ -26,7 +26,7 @@ if (Meteor.isServer) {
 Meteor.methods({
     'channels.insert'(text, playlist) {
         check(text, String);
-        check(playlist, Object);
+        check(playlist, String);
         // Make sure the user is logged in before inserting a task
         if (!this.userId) {
             throw new Meteor.Error('not-authorized');

@@ -4,6 +4,8 @@ import {Meteor} from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import {createContainer} from 'meteor/react-meteor-data';
 
+import Channel from "./Channel";
+
 import {Channels} from '../api/channels/channels.js';
 import {getPlaylist} from '../api/getPlaylist/methods.js';
 
