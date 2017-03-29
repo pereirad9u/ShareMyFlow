@@ -11,9 +11,9 @@ export default class SongSearchResultsItem extends Component {
 
   addToChannelSong() {
     let channelId = this.props.channel._id, song = this.props.song;
-
+    let channelPort = this.props.channel.portServ;
     // ----------------------need error handling to see if song has been added to list already---------
-    Meteor.call('channelSongs.insert', channelId, song);
+    Meteor.call('channelSongs.insert', channelId, song, channelPort);
   }
 
   render() {
