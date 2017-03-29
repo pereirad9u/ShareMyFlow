@@ -5,6 +5,7 @@ import {check} from 'meteor/check';
 import {SpotifyWebApi} from 'meteor/xinranxiao:spotify-web-api';
 
 import {Songs} from '../imports/api/Songs/methods.js';
+import {Channels} from '../imports/api/channels/channels.js';
 
 export const SpotifyResponses = new Mongo.Collection('spotifyResponses');
 
@@ -48,13 +49,30 @@ Meteor.methods({
 
     getSavedPlaylists: function () {
         var spotifyApi = new SpotifyWebApi();
+        console.log("loooooooooool",spotifyApi);
         var response = spotifyApi.getUserPlaylists(Meteor.user().services.spotify.id, {});
-
+        console.log(response);
         if (checkTokenRefreshed(response, spotifyApi)) {
             response = spotifyApi.getUserPlaylists(Meteor.user().services.spotify.id, {});
         }
         return response.data.body;
     },
+
+    getPlaylistTracks: function(id){
+      var spotifyApi = new SpotifyWebApi();
+      var channel = Channels.find(id).fetch();
+      var playlist = channel[0].playlist;
+      //console.log("id plaaaaaaaaylist",playlist);
+      var response = spotifyApi.getPlaylistTracks("spotify", playlist, {});
+      //console.log("id user",Meteor.user().services.spotify.id);
+      if (checkTokenRefreshed(response, spotifyApi)) {
+          response = spotifyApi.getPlaylistTracks("spotify", playlist, {});
+      }
+      //console.log("réponse de spotify",response);
+      return response.data.body;
+
+
+    }
 
 
 });

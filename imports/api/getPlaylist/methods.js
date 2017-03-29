@@ -10,7 +10,7 @@ import {SpotifyWebApi} from 'meteor/xinranxiao:spotify-web-api'
 
 Meteor.methods({
 
-
+    /**
     getSavedPlaylists: function() {
         let spotifyApi = new SpotifyWebApi();
         let response = spotifyApi.getUserPlaylists(Meteor.user().services.spotify.id, {});
@@ -25,8 +25,8 @@ Meteor.methods({
         let spotifyApi = new SpotifyWebApi();
         let response = spotifyApi.getPlaylistTracks(userId,playlistId).data.body;
         return response;
-    }
-    
+    }*/
+
 
 
 });
@@ -39,4 +39,3 @@ var checkTokenRefreshed = function(response, api) {
         return false;
     }
 }
-

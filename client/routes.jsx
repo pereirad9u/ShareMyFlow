@@ -29,12 +29,12 @@ FlowRouter.route('/newchannel', {
   name: 'newchannel',
   action() {
 
-    
-      Meteor.call('getSavedPlaylists', function(err, response) {
-          console.log(response);
-          Session.set('playlistCount', response.total);
-          Session.set('currentPlaylists', response.items);
-      });
+
+  Meteor.call('getSavedPlaylists', function(err, response) {
+    console.log(response);
+    Session.set('playlistCount', response.total);
+    Session.set('currentPlaylists', response.items);
+  });
     mount(App, {content: <NewChannelContainer />});
   }
 });
@@ -55,6 +55,11 @@ FlowRouter.route('/channel/:_id', {
           $set: {
               "profile.current_channel": params._id
           }
+      });
+
+      Meteor.call('getPlaylistTracks', params._id, function(err, response){
+        console.log("erreur : ",err);
+        console.log("reponse : ",response);
       });
     mount(App, {
       content: <ChannelContainer {...params} />

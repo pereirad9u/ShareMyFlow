@@ -11,7 +11,7 @@ if (Meteor.isServer) {
         return Channels.find({
             $or: [
                 {private: {$ne: true}},
-                {owner: this.userId},
+                {owner: this.userId}
             ],
         });
     });
@@ -82,4 +82,5 @@ Meteor.methods({
 
         Channels.update(taskId, {$set: {private: setToPrivate}});
     },
+
 });
