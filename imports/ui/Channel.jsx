@@ -15,7 +15,6 @@ import SongSearchResultsItem  from './components/SongSearchResultsItem.jsx';
 import SearchSong             from './components/SearchSong.jsx';
 
 
-
 // Channels component - represents the rendering of channels
 export default class Channel extends Component {
 
@@ -138,6 +137,15 @@ export default class Channel extends Component {
 
     }
 
+    renderAudio(context) {
+        if (!this.props.loading) {
+            return(
+                <audio src={"http://89.80.51.248:800" + this.props.channels[0].portServ} autoPlay="autoPlay"
+                       controls="controls" preload="none"></audio>
+            )
+        }
+    }
+
     render() {
         return (
             <div className="componentWrapper">
@@ -166,10 +174,6 @@ export default class Channel extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="list-group">
-                    <audio src={"http://89.80.51.248:800"+this.props.channels[0].portServ} autoPlay="autoPlay" controls="controls" preload="none"></audio>
-                    </div>
-
                     <div className="col-md-5">
                         <div className="panel panel-default">
                             <div className="panel-heading">
@@ -210,6 +214,9 @@ export default class Channel extends Component {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div>
+                    {this.renderAudio(this)}
                 </div>
             </div>
 
