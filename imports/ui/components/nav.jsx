@@ -9,23 +9,28 @@ export default class Nav extends Component {
 
     render() {
         return (
+
             <nav className="navbar navbar-inverse">
                 <div className="container-fluid">
                     <div className="navbar-header">
-                        <a className="navbar-brand" href="../">MyFlow</a>
+                        <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                        </button>
+                        <a className="navbar-brand" href={FlowHelpers.pathFor('home')}>MyFlow</a>
                     </div>
-
-                    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                    <div className="collapse navbar-collapse" id="myNavbar">
                         <ul className="nav navbar-nav">
-                            <li className="active"><a href={FlowHelpers.pathFor('newchannel')}>New channel</a></li>
+                            <li><a href={FlowHelpers.pathFor('newchannel')}>New channel</a></li>
                             <li><a href={FlowHelpers.pathFor('profile', {_id: Meteor.userId()}) }>Profile</a></li>
-                            <ul className="nav navbar-nav navbar-right">
-                                <li><AccountsUIWrapper /></li>
-                            </ul>
+                            <AccountsUIWrapper/>
                         </ul>
+
                     </div>
                 </div>
             </nav>
-        );
+
+        )
     }
 }
