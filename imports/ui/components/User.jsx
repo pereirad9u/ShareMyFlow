@@ -25,11 +25,11 @@ export default class User extends Component {
                                 {this.props.user.profile.images[0] !== undefined ?
                                     <div className="col-md-3 col-lg-3 "><img width="200px" height="200px" alt="User Pic"
                                                                              src={this.props.user.profile.images[0].url}
-                                                                             className="img-circle img-responsive"/>
+                                                                             className="img-circle img-profile img-responsive"/>
                                     </div> :
                                     <div className="col-md-3 col-lg-3 "><img width="200px" height="200px" alt="User Pic"
                                                                              src="http://www.sac-en-papier.net/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png"
-                                                                             className="img-circle img-responsive"/>
+                                                                             className="img-circle img-profile img-responsive"/>
                                     </div>}
 
                                 <div className=" col-md-9 col-lg-9 al">
