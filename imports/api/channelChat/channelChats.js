@@ -7,6 +7,11 @@ export const ChannelChats = new Mongo.Collection('channelChats');
 if (Meteor.isServer) {
     // This code only runs on the server
     // Only publish tasks that are public or belong to the current user
+    Meteor.publish('user', function tasksPublication() {
+        return Meteor.users.find();
+
+    });
+
     Meteor.publish('users', function tasksPublication() {
         return Meteor.users.find({'status.online':true});
 

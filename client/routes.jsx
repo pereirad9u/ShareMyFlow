@@ -5,12 +5,15 @@ import { Meteor } from 'meteor/meteor';
 // import AppMain from '../imports/ui/AppMain.jsx';
 import App from '../imports/ui/layouts/App.jsx';
 import ChannelListContainer from '../imports/ui/containers/ChannelListContainer.js';
-
 import Channel from '../imports/ui/Channel.jsx';
 import NewChannel from '../imports/ui/NewChannel.jsx';
 import ChannelContainer from '../imports/ui/ChannelContainer.js';
 import NewChannelContainer from '../imports/ui/NewChannelContainer.js';
+import ProfileContainer from '../imports/ui/ProfileContainer.js';
+import Profile from '../imports/ui/Profile.jsx';
+import Home from '../imports/ui/components/Home.jsx';
 import {SpotifyWebApi} from 'meteor/xinranxiao:spotify-web-api'
+
 
 
 
@@ -21,8 +24,20 @@ FlowRouter.route('/', {
               "profile.current_channel": null
           }
       });
-    mount(App, {content: <ChannelListContainer />});
+    mount(App, {content: <Home />});
   }
+});
+
+FlowRouter.route('/profile/:_id', {
+    name:'profile',
+    action(params) {
+        Meteor.users.update(Meteor.userId(), {
+            $set: {
+                "profile.current_channel": null
+            }
+        });
+        mount(App, {content: <ProfileContainer {...params}/>});
+    }
 });
 
 FlowRouter.route('/newchannel', {
