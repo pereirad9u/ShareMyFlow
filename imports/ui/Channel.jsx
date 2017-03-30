@@ -36,6 +36,8 @@ export default class Channel extends Component {
         });
     }
 
+
+
     handleSubmit(event) {
         event.preventDefault();
         // Find the text field via the React ref
