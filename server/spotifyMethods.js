@@ -60,15 +60,25 @@ Meteor.methods({
 
     getPlaylistTracks: function(id){
       var spotifyApi = new SpotifyWebApi();
-      var channel = Channels.find(id).fetch();
-      var playlist = channel[0].playlist;
-      //console.log("id plaaaaaaaaylist",playlist);
-      var response = spotifyApi.getPlaylistTracks("spotify", playlist, {});
+      //var channel = Channels.find(id).fetch();
+      //var playlist = channel[0].playlist;
+      //console.log("id plaaaaaaaaylist");
+      let response = spotifyApi.getPlaylistTracks("spotify", id, {});
+      let username = Meteor.user().profile.display_name !== null ? Meteor.user().profile.display_name : Meteor.user().profile.id;
+    console.log("test resp",response);
+      if(response.data == undefined){
+          response = spotifyApi.getPlaylistTracks(username, id, {});
+          console.log("undef 1")
+      }
       //console.log("id user",Meteor.user().services.spotify.id);
       if (checkTokenRefreshed(response, spotifyApi)) {
-          response = spotifyApi.getPlaylistTracks("spotify", playlist, {});
+          response = spotifyApi.getPlaylistTracks("spotify", id, {});
+          if(response.data == undefined){
+              response = spotifyApi.getPlaylistTracks(username, id, {});
+              console.log("undef 2")
+          }
       }
-      //console.log("réponse de spotify",response);
+      console.log("réponse de spotify",response.data.body);
       return response.data.body;
 
 

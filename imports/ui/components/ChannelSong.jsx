@@ -48,7 +48,7 @@ export default class ChannelSong extends Component {
         </span> : ""
                 }
                 <div className="info">
-                    <h2 className="title">{channelSong.order}. {channelSong.trackName} by {channelSong.artistName}</h2>
+                    <h2 className="title">{channelSong.trackName} by {channelSong.artistName}</h2>
                     <p className="desc">Added by {channelSong.username}</p>
                 </div>
             </li>

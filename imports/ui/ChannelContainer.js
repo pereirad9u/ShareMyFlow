@@ -22,7 +22,6 @@ export default ChannelContainer = createContainer(({_id}) => {
     const loading = !channelSongHandle.ready();
 
     let searchValue = Session.get('searchVal');
-// console.log('containerID', _id);
     Meteor.subscribe('songs', searchValue);
 
     Meteor.subscribe('channelChats');
