@@ -1,6 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
 import {check} from 'meteor/check';
+import {HTTP} from 'meteor/http';
 import {Songs} from '../Songs/methods.js';
 import {SpotifyWebApi} from 'meteor/xinranxiao:spotify-web-api';
 export const Channels = new Mongo.Collection('channels');
@@ -56,18 +57,23 @@ Meteor.methods({
             portServ: port,
         });
         let channel = Channels.findOne({},{sort: {createdAt: -1,limit : 1}});
-        console.log("un truuuuuuuuuc",channel);
-        channel.playlists.items.map(function (item) {
-            let spotify = new SpotifyWebApi();
-            let song = spotify.getTrack(item.track.id);
-            //console.log("test",item.track.id)
-            //console.log("objet song de spotify",song);
-            /*console.log("objet song de spotify",item)*/
-            Meteor.call('songs.insert',[song.data.body]);
-            let chanSong = Songs.findOne({trackName: song.data.body.name});
-            //console.log(chanSong);
-            Meteor.call('channelSongs.insert',channel._id,chanSong,channel.portServ);
-        })
+        HTTP.get("http://89.80.51.248:21080/index.php?0="+channel.portServ,function(){
+            console.log("un truuuuuuuuuc",channel);
+            channel.playlists.items.map(function (item) {
+                let spotify = new SpotifyWebApi();
+                let song = spotify.getTrack(item.track.id);
+                //console.log("test",item.track.id)
+                //console.log("objet song de spotify",song);
+                /*console.log("objet song de spotify",item)*/
+                Meteor.call('songs.insert',[song.data.body]);
+                let chanSong = Songs.findOne({trackName: song.data.body.name});
+                //console.log(chanSong);
+                Meteor.call('channelSongs.insert',channel._id,chanSong,channel.portServ);
+            });
+            HTTP.get("http://89.80.51.248:606"+channel.portServ+"/play");
+        });
+
+
 
     },
     'channels.remove'(taskId) {
