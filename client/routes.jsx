@@ -56,11 +56,11 @@ FlowRouter.route('/channel/:_id', {
               "profile.current_channel": params._id
           }
       });
-
+        /*console.log("paramsid",params._id);
       Meteor.call('getPlaylistTracks', params._id, function(err, response){
         console.log("erreur : ",err);
-        console.log("reponse : ",response);
-      });
+        console.log("Playlist ? :reponse : ",response);
+      });*/
     mount(App, {
       content: <ChannelContainer {...params} />
     });

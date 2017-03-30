@@ -1,8 +1,10 @@
 import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
 import {check} from 'meteor/check';
-
+import {Songs} from '../Songs/methods.js';
+import {SpotifyWebApi} from 'meteor/xinranxiao:spotify-web-api';
 export const Channels = new Mongo.Collection('channels');
+
 
 if (Meteor.isServer) {
     // This code only runs on the server
@@ -11,7 +13,8 @@ if (Meteor.isServer) {
         return Channels.find({
             $or: [
                 {private: {$ne: true}},
-                {owner: this.userId}
+                {owner: this.userId},
+                {createdAt: this.createdAt}
             ],
         });
     });
@@ -34,16 +37,37 @@ Meteor.methods({
         const nbChannel = Channels.find().count();
         let port = nbChannel;
         let username = Meteor.user().profile.display_name !== null ? Meteor.user().profile.display_name : Meteor.user().profile.id;
-
-
-         Channels.insert({
+        console.log(playlist);
+        let playlists = [];
+         Meteor.call('getPlaylistTracks',playlist, function (err, response) {
+             playlists = response;
+            console.log("erreur : ", err);
+            console.log("Playlist ? :reponse : ", response);
+        });
+         console.log("Playlist apres call",playlists)
+        let date = new Date();
+        Channels.insert({
             text,
             playlist,
-            createdAt: new Date(),
+            playlists,
+            createdAt: date,
             owner: this.userId,
             username: username,
             portServ: port,
         });
+        let channel = Channels.findOne({},{sort: {DateTime: -1,limit : 1}});
+        console.log("un truuuuuuuuuc",channel);
+        channel.playlists.items.map(function (item) {
+            let spotify = new SpotifyWebApi();
+            let song = spotify.getTrack(item.track.id);
+            //console.log("test",item.track.id)
+            console.log("objet song de spotify",song);
+            /*console.log("objet song de spotify",item)*/
+            Meteor.call('songs.insert',[song.data.body]);
+            let chanSong = Songs.findOne({trackName: song.data.body.name});
+            console.log(chanSong);
+            Meteor.call('channelSongs.insert',channel._id,chanSong,channel.portServ);
+        })
 
     },
     'channels.remove'(taskId) {

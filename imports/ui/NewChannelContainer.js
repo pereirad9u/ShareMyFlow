@@ -13,7 +13,6 @@ export default NewChannelContainer = createContainer(({_id}) => {
     const channelSongHandle = Meteor.subscribe('channelSongs');
     const loading = !channelSongHandle.ready();
     const playlist =  Session.get("currentPlaylists");
-    console.log(playlist)
     return {
         playlist : playlist,
         loading

@@ -7,6 +7,10 @@ import SearchPlaylist from './components/SearchPlaylist.jsx';
 
 
 export default class NewChannel extends Component {
+
+    setPlaylist(event){
+        this.playlist = event.target.value;
+    }
     handleSubmit(event) {
         event.preventDefault();
 
@@ -14,9 +18,9 @@ export default class NewChannel extends Component {
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
 
 
-        const playlist = ReactDOM.findDOMNode(this.refs.playlistInput).value.trim();
-        console.log(playlist);
-        Meteor.call('channels.insert', text, playlist)
+
+        console.log("Nchan befor insert :",this.playlist);
+        Meteor.call('channels.insert', text, this.playlist);
 
         // Clear form
         ReactDOM.findDOMNode(this.refs.textInput).value = '';
@@ -33,12 +37,14 @@ export default class NewChannel extends Component {
 
 
                     return (
-                        <div className="container">
+                        <div className="container" onChange={this.setPlaylist.bind(this)}>
 
                             <h4>{playlist.name}</h4>
                             <img src={playlist.images[0].url}/>
 
-                            <input name="playlist" type="radio" id={playlist.id} ref="playlistInput" value={playlist.id} />
+                            <input name="playlist"
+                                   type="radio" id={playlist.id}
+                                   ref="playlistInput" value={playlist.id}/>
                         </div>
                     );
                 });
@@ -72,6 +78,6 @@ export default class NewChannel extends Component {
 
 
 NewChannel.propTypes = {
-    playlist:PropTypes.array.isRequired,
+    playlist:PropTypes.string.isRequired,
     loading : PropTypes.bool
 };

@@ -43,7 +43,7 @@ Meteor.methods({
       let username = Meteor.user().profile.display_name !== null ? Meteor.user().profile.display_name:Meteor.user().profile.id;
         // check if track exists in db, insert if not
       if (!Songs.findOne({trackID: spotifyTrackID})) {
-        console.log()
+        console.log("insertion song")
         Songs.insert({
           trackID     : songsResponse[i].id,
           trackName   : songsResponse[i].name,
