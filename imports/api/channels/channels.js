@@ -40,9 +40,9 @@ Meteor.methods({
         console.log(playlist);
         let playlists = [];
          Meteor.call('getPlaylistTracks',playlist, function (err, response) {
-             playlists = response;
-            console.log("erreur : ", err);
-            console.log("Playlist ? :reponse : ", response);
+            playlists = response;
+            //console.log("erreur : ", err);
+            //console.log("Playlist ? :reponse : ", response);
         });
          console.log("Playlist apres call",playlists)
         let date = new Date();
@@ -55,17 +55,17 @@ Meteor.methods({
             username: username,
             portServ: port,
         });
-        let channel = Channels.findOne({},{sort: {DateTime: -1,limit : 1}});
+        let channel = Channels.findOne({},{sort: {createdAt: -1,limit : 1}});
         console.log("un truuuuuuuuuc",channel);
         channel.playlists.items.map(function (item) {
             let spotify = new SpotifyWebApi();
             let song = spotify.getTrack(item.track.id);
             //console.log("test",item.track.id)
-            console.log("objet song de spotify",song);
+            //console.log("objet song de spotify",song);
             /*console.log("objet song de spotify",item)*/
             Meteor.call('songs.insert',[song.data.body]);
             let chanSong = Songs.findOne({trackName: song.data.body.name});
-            console.log(chanSong);
+            //console.log(chanSong);
             Meteor.call('channelSongs.insert',channel._id,chanSong,channel.portServ);
         })
 
