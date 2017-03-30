@@ -10,6 +10,8 @@ export default class NewChannel extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
+
+
         // Find the text field via the React ref
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
 
