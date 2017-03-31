@@ -8,49 +8,44 @@ import SearchPlaylist from './components/SearchPlaylist.jsx';
 
 export default class NewChannel extends Component {
 
-    setPlaylist(event){
+    setPlaylist(event) {
         this.playlist = event.target.value;
     }
+
     handleSubmit(event) {
         event.preventDefault();
-
 
 
         // Find the text field via the React ref
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
 
 
-
-        console.log("Nchan befor insert :",this.playlist);
+        console.log("Nchan befor insert :", this.playlist);
         Meteor.call('channels.insert', text, this.playlist);
 
         // Clear form
         ReactDOM.findDOMNode(this.refs.textInput).value = '';
     }
 
-    renderPlaylist(){
-            if(!this.props.loading) {
-                let filteredPlaylist = this.props.playlist;
+    renderPlaylist() {
+        if (!this.props.loading) {
+            let filteredPlaylist = this.props.playlist;
+            return filteredPlaylist.map((playlist) => {
 
+                return (
+                    <div className="container" onChange={this.setPlaylist.bind(this)}>
 
-                console.log(this.props.playlist)
+                        <h4>{playlist.name}</h4>
+                        {playlist.images[0] !== undefined ? <img className="playlist_img" alt={playlist.name} src={playlist.images[0].url}/>
+                            : <img src="https://placehold.it/150x150"/>}
 
-                return filteredPlaylist.map((playlist) => {
-
-
-                    return (
-                        <div className="container" onChange={this.setPlaylist.bind(this)}>
-
-                            <h4>{playlist.name}</h4>
-                            <img src={playlist.images[0].url}/>
-
-                            <input name="playlist"
-                                   type="radio" id={playlist.id}
-                                   ref="playlistInput" value={playlist.id}/>
-                        </div>
-                    );
-                });
-            }
+                        <input name="playlist"
+                               type="radio" id={playlist.id}
+                               ref="playlistInput" value={playlist.id}/>
+                    </div>
+                );
+            });
+        }
     }
 
     render() {
@@ -63,11 +58,11 @@ export default class NewChannel extends Component {
                         placeholder="Type to add new channels"
                     />
                     <div className="list-group">
-                    {this.renderPlaylist()}
+                        {this.renderPlaylist()}
                     </div>
 
                     <button type="submit">Créer le channel</button>
-            </form>
+                </form>
 
             </div>
 
@@ -80,6 +75,6 @@ export default class NewChannel extends Component {
 
 
 NewChannel.propTypes = {
-    playlist:PropTypes.string.isRequired,
-    loading : PropTypes.bool
+    playlist: PropTypes.string.isRequired,
+    loading: PropTypes.bool
 };
