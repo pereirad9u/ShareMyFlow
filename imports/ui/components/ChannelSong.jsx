@@ -6,15 +6,9 @@ import classnames from 'classnames';
 // ChannelSong component - represents a single channelSong item
 export default class ChannelSong extends Component {
 
-    // let placeholder = document.createElement("li");
-    // placeholder.className = "placeholder";
     removeThisSongFromChannel() {
         Meteor.call('channelSongs.remove', this.props.channelSong._id);
-    }//,
-    //
-    // togglePrivate() {
-    //   Meteor.call('tasks.setPrivate', this.props.task._id, ! this.props.task.private);
-    // }
+    }
 
 
     render() {
@@ -29,15 +23,9 @@ export default class ChannelSong extends Component {
             "list-group-item-action": true,
         });
 
-        const channelSongAnchorClasses = classnames({
-            "list-group-item": true,
-            "list-group-item-action": true,
-        });
-// console.log('channelSongDetails', this.props.channelSong);
         return (
             <li
                 key={channelSong._id}
-                data-id={channelSong._id}
                 className={channelSongClassName}
             >
                 { Meteor.userId() === channelSong.owner ?

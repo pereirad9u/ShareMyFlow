@@ -45,7 +45,6 @@ Meteor.methods({
             //console.log("erreur : ", err);
             //console.log("Playlist ? :reponse : ", response);
         });
-         console.log("Playlist apres call",playlists)
         let date = new Date();
         Channels.insert({
             text,
@@ -58,13 +57,9 @@ Meteor.methods({
         });
         let channel = Channels.findOne({},{sort: {createdAt: -1,limit : 1}});
         HTTP.get("http://89.80.51.248:21080/index.php?0="+channel.portServ,function(){
-            console.log("un truuuuuuuuuc",channel);
             channel.playlists.items.map(function (item) {
                 let spotify = new SpotifyWebApi();
                 let song = spotify.getTrack(item.track.id);
-                //console.log("test",item.track.id)
-                //console.log("objet song de spotify",song);
-                /*console.log("objet song de spotify",item)*/
                 Meteor.call('songs.insert',[song.data.body]);
                 let chanSong = Songs.findOne({trackName: song.data.body.name});
                 //console.log(chanSong);
@@ -72,6 +67,8 @@ Meteor.methods({
             });
             HTTP.get("http://89.80.51.248:606"+channel.portServ+"/play");
         });
+
+        FlowRouter.go('channel',{_id:channel._id});
 
 
 

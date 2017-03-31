@@ -9,7 +9,6 @@ import Home from "../imports/ui/components/Home.jsx";
 import EditProfile from "../imports/ui/containers/EditContainer";
 import {SpotifyWebApi} from "meteor/xinranxiao:spotify-web-api";
 
-
 FlowRouter.route('/', {
     name: 'home',
     action() {
