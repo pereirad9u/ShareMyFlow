@@ -208,6 +208,16 @@ i{
     margin-right: 1%;
 }
 
+.state-icon {
+    left: -5px;
+}
+.list-group-item-primary {
+    color: rgb(255, 255, 255);
+    background-color: rgb(66, 139, 202);
+}
+
+.form-check>.form-check-label>.form-check-input {
+    margin-right: 10px;
 .img-profile{
     width: 200px !important;
     height: 200px !important;
