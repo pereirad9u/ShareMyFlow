@@ -8,7 +8,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 // import Task from './Task.jsx';
 // import AccountsUIWrapper from '../AccountsUIWrapper.jsx';
 
-import Nav from '../components/nav.jsx';
+import NavContainer from '../containers/NavContainer.js';
 
 import styles from '../styles/bootstrap-base.min.css';
 import stylesLab from '../styles/bootstrap-spacelab.min.css';
@@ -37,7 +37,7 @@ export default class App extends Component {
     return (
       <div>
 
-        <Nav />
+        <NavContainer />
         <div className='container'>
         {this.props.content}
         </div>
