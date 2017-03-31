@@ -7,31 +7,25 @@ import SearchPlaylist from './components/SearchPlaylist.jsx';
 
 
 export default class NewChannel extends Component {
+
+
+    setPlaylist(event) {
+        this.playlist = event.target.value;
+    }
+
     handleSubmit(event) {
         event.preventDefault();
-
         // Find the text field via the React ref
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
-
-
-        const playlist = ReactDOM.findDOMNode(this.refs.playlistInput).value.trim();
-        console.log(playlist);
-        Meteor.call('channels.insert', text, playlist);
-
+        Meteor.call('channels.insert', text, this.playlist);
         // Clear form
         ReactDOM.findDOMNode(this.refs.textInput).value = '';
     }
 
-    renderPlaylist(){
-            if(!this.props.loading) {
-                let filteredPlaylist = this.props.playlist;
-
-
-                console.log(this.props.playlist)
-
-                return filteredPlaylist.map((playlist) => {
-
-
+    renderPlaylist() {
+        if (!this.props.loading) {
+            let filteredPlaylist = this.props.playlist;
+            return filteredPlaylist.map((playlist) => {
                     return (
                       <div className="col-md-3">
                         <div className="container">
@@ -39,7 +33,9 @@ export default class NewChannel extends Component {
                             <h4>{playlist.name}</h4>
                             <label>
                               <input name="playlist" type="radio" id={playlist.id} ref="playlistInput" value={playlist.id} />
-                              <img className="img-responsive img-thumbnail" src={playlist.images[0].url}/>
+                              
+                              {playlist.images[0] !== undefined ? <img className="playlist_img img-responsive img-thumbnail" alt={playlist.name} src={playlist.images[0].url}/>
+                              : <img className="img-responsive img-thumbnail" src="https://placehold.it/150x150"/>}
                             </label>
 
                         </div>
@@ -77,6 +73,7 @@ export default class NewChannel extends Component {
                     </div>
             </form>
 
+
             </div>
 
 
@@ -91,3 +88,4 @@ NewChannel.propTypes = {
     playlist:PropTypes.array.isRequired,
     loading : PropTypes.bool
 };
+
