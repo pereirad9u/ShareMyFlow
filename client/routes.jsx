@@ -63,24 +63,19 @@ FlowRouter.route('/newchannel', {
 // });
 
 FlowRouter.route('/channel/:_id', {
-    name: 'channel',
-    action(params) {
-        //empty search var
-        Session.set('searchVal', '');
-        Meteor.users.update(Meteor.userId(), {
-            $set: {
-                "profile.current_channel": params._id
-            }
-        });
-
-        Meteor.call('getPlaylistTracks', params._id, function (err, response) {
-            console.log("erreur : ", err);
-            console.log("reponse : ", response);
-        });
-        mount(App, {
-            content: <ChannelContainer {...params} />
-        });
-    }
+  name:'channel',
+  action( params ) {
+    //empty search var
+    Session.set('searchVal','');
+      Meteor.users.update(Meteor.userId(), {
+          $set: {
+              "profile.current_channel": params._id
+          }
+      });
+    mount(App, {
+      content: <ChannelContainer {...params} />
+    });
+  }
 });
 
 FlowRouter.notFound = {

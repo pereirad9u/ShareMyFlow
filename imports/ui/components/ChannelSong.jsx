@@ -16,31 +16,6 @@ export default class ChannelSong extends Component {
     //   Meteor.call('tasks.setPrivate', this.props.task._id, ! this.props.task.private);
     // }
 
-    dragStart(e) {
-        this.dragged = e.currentTarget;
-        e.dataTransfer.effectAllowed = 'move';
-
-        // Firefox requires calling dataTransfer.setData
-        // for the drag to properly work
-        e.dataTransfer.setData("text/html", e.currentTarget);
-    }
-
-    dragEnd(e) {
-
-        this.dragged.style.display = "block";
-        // this.dragged.parentNode.removeChild(placeholder);
-
-        console.log('data', this.props);
-        // Update state
-        let data = this.props.data;
-        let from = Number(this.dragged.dataset.id);
-        let to = Number(this.over.dataset.id);
-        console.log('from', from, 'to', to);
-        // if(from < to) to--;
-        // data.splice(to, 0, data.splice(from, 1)[0]);
-        // this.setState({data: data});
-    }
-
 
     render() {
 
@@ -63,19 +38,17 @@ export default class ChannelSong extends Component {
             <li
                 key={channelSong._id}
                 data-id={channelSong._id}
-                draggable="true"
                 className={channelSongClassName}
-                onDragEnd={this.dragEnd}
-                onDragStart={this.dragStart}
             >
-        <span className="pull-right delete_song">
+                { Meteor.userId() === channelSong.owner ?
+                    <span className="pull-right delete_song">
           <button className="btn btn-xs btn-danger" onClick={this.removeThisSongFromChannel.bind(this)}>
             &times;
           </button>
-        </span>
-
+        </span> : ""
+                }
                 <div className="info">
-                    <h2 className="title">{channelSong.order}. {channelSong.trackName} by {channelSong.artistName}</h2>
+                    <h2 className="title">{channelSong.trackName} by {channelSong.artistName}</h2>
                     <p className="desc">Added by {channelSong.username}</p>
                 </div>
             </li>

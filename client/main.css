@@ -218,4 +218,7 @@ i{
 
 .form-check>.form-check-label>.form-check-input {
     margin-right: 10px;
+.img-profile{
+    width: 200px !important;
+    height: 200px !important;
 }

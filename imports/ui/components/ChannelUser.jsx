@@ -19,5 +19,5 @@ export default class ChannelUser extends Component {
 ChannelUser.propTypes = {
     // This component gets the task to display through a React prop.
     // We can use propTypes to indicate it is required
-    channelUser: PropTypes.array.isRequired
+    channelUser: PropTypes.object.isRequired
 };
