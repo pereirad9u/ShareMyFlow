@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react';
 import {Meteor} from 'meteor/meteor';
 import classnames from 'classnames';
 import ReactDOM from 'react-dom';
-// Task component - represents a single todo item
 export default class User extends Component {
 
     render() {
@@ -18,6 +17,7 @@ export default class User extends Component {
                 <div>
                     <div className="panel panel-info">
                         <div className="panel-heading">
+                            {Meteor.userId() == this.props.user._id ? <a href={FlowHelpers.pathFor('editprofile')}><i className="fa fa-edit fa-pull-right"></i></a> : ""}
                             <h3 className="panel-title">{username}</h3>
                         </div>
                         <div className="panel-body">
