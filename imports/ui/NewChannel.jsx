@@ -7,22 +7,16 @@ import SearchPlaylist from './components/SearchPlaylist.jsx';
 
 
 export default class NewChannel extends Component {
-
-    setPlaylist(event){
-        this.playlist = event.target.value;
-    }
     handleSubmit(event) {
         event.preventDefault();
-
-
 
         // Find the text field via the React ref
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
 
 
-
-        console.log("Nchan befor insert :",this.playlist);
-        Meteor.call('channels.insert', text, this.playlist);
+        const playlist = ReactDOM.findDOMNode(this.refs.playlistInput).value.trim();
+        console.log(playlist);
+        Meteor.call('channels.insert', text, playlist);
 
         // Clear form
         ReactDOM.findDOMNode(this.refs.textInput).value = '';
@@ -39,15 +33,17 @@ export default class NewChannel extends Component {
 
 
                     return (
-                        <div className="container" onChange={this.setPlaylist.bind(this)}>
+                      <div className="col-md-3">
+                        <div className="container">
 
                             <h4>{playlist.name}</h4>
-                            <img src={playlist.images[0].url}/>
+                            <label>
+                              <input name="playlist" type="radio" id={playlist.id} ref="playlistInput" value={playlist.id} />
+                              <img className="img-responsive img-thumbnail" src={playlist.images[0].url}/>
+                            </label>
 
-                            <input name="playlist"
-                                   type="radio" id={playlist.id}
-                                   ref="playlistInput" value={playlist.id}/>
                         </div>
+                      </div>
                     );
                 });
             }
@@ -57,16 +53,28 @@ export default class NewChannel extends Component {
         return (
             <div>
                 <form className="new-task" onSubmit={this.handleSubmit.bind(this)}>
-                    <input
+                  <div className="row">
+                    <div className="form-group col-md-4">
+                      <label for="newChannelTitle">Channel Title</label>
+                      <input
+                        id="newChannelTitle"
+                        className="form-control"
                         type="text"
                         ref="textInput"
-                        placeholder="Type to add new channels"
-                    />
-                    <div className="list-group">
-                    {this.renderPlaylist()}
+                        placeholder="Type the new of your new channel"
+                        />
                     </div>
-
-                    <button type="submit">Créer le channel</button>
+                  </div>
+                    <div className="row">
+                      {this.renderPlaylist()}
+                    </div>
+                    <div className="row">
+                      <div className="col-md-10">
+                      </div>
+                      <div className="col-md-2">
+                      <button className="btn btn-primary btn-lg" type="submit">Créer le channel</button>
+                      </div>
+                    </div>
             </form>
 
             </div>
@@ -80,6 +88,6 @@ export default class NewChannel extends Component {
 
 
 NewChannel.propTypes = {
-    playlist:PropTypes.string.isRequired,
+    playlist:PropTypes.array.isRequired,
     loading : PropTypes.bool
 };
