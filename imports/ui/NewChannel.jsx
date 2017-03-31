@@ -28,18 +28,16 @@ export default class NewChannel extends Component {
             return filteredPlaylist.map((playlist) => {
                     return (
                       <div className="col-md-3">
-                        <div className="container">
 
                             <h4>{playlist.name}</h4>
                             <label>
                               <input name="playlist" type="radio" id={playlist.id} ref="playlistInput" value={playlist.id} />
                               
                               {playlist.images[0] !== undefined ? <img className="playlist_img img-responsive img-thumbnail" alt={playlist.name} src={playlist.images[0].url}/>
-                              : <img className="img-responsive img-thumbnail" src="https://placehold.it/150x150"/>}
+                              : <img className="img-responsive img-thumbnail" src={"https://placehold.it/150x150?text=playlist+"+playlist.name}/>}
                             </label>
 
                         </div>
-                      </div>
                     );
                 });
             }

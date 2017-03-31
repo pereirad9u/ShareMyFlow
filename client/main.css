@@ -218,6 +218,7 @@ i{
 
 .form-check>.form-check-label>.form-check-input {
     margin-right: 10px;
+}
 .img-profile{
     width: 200px !important;
     height: 200px !important;
@@ -245,7 +246,8 @@ label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
   color: #ffffff;
 }
 
-.playlist_img{
+.playlist_img {
     width: 150px !important;
     height: 150px !important;
 
+}

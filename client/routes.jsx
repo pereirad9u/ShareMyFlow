@@ -5,17 +5,11 @@ import { Meteor } from 'meteor/meteor';
 // load AppMain, App, and Channel React components
 // import AppMain from '../imports/ui/AppMain.jsx';
 import App from '../imports/ui/layouts/App.jsx';
-import ChannelListContainer from '../imports/ui/containers/ChannelListContainer.js';
 import HomeContainer from '../imports/ui/containers/HomeContainer.js';
-import Channel from '../imports/ui/Channel.jsx';
-import NewChannel from '../imports/ui/NewChannel.jsx';
 import ChannelContainer from '../imports/ui/ChannelContainer.js';
 import NewChannelContainer from '../imports/ui/NewChannelContainer.js';
 import ProfileContainer from '../imports/ui/ProfileContainer.js';
-import Profile from '../imports/ui/Profile.jsx';
-import Home from '../imports/ui/components/Home.jsx';
 import {SpotifyWebApi} from 'meteor/xinranxiao:spotify-web-api'
-import EditProfile from "../imports/ui/containers/EditContainer";
 
 
 FlowRouter.route('/', {
