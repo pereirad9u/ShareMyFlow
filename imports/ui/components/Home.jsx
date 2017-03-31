@@ -6,16 +6,16 @@ export default class Home extends Component {
 
     renderCarousel(context){
       return (
-        <div style={{height:300,margin:20}}>
+        <div style={{height:350,margin:20}}>
           <React_Boostrap_Carousel animation={true} className="carousel-fade">
-            <div style={{height:300,width:"100%",backgroundColor:"skyblue"}}>
-              123
+            <div style={{height:350,width:"100%",backgroundImage: "url('http://mercymusic.org/wp-content/uploads/2013/04/outreach-slider-for-page.jpg')", backgroundRepeat:"no-repeat", backgroundPosition:"center"}}>
+
             </div>
-            <div style={{height:300,width:"100%",backgroundColor:"aqua"}}>
-              456
+            <div style={{height:350,width:"100%",backgroundImage:"url('http://www.warnerchappellpm.com/uploads/2015/05/PLAYLISTS-BANNER-REVOLUTION-SLIDER.jpg')", backgroundRepeat:"no-repeat", backgroundPosition:"center"}}>
+
             </div>
-            <div style={{height:300,width:"100%",backgroundColor:"lightpink"}}>
-              789
+            <div style={{height:350,width:"100%",backgroundImage:"url('http://www.smartone-music.fr/wp-content/uploads/2013/06/Slider-Smartone-Music-4.jpg')", backgroundRepeat:"no-repeat", backgroundPosition:"center"}}>
+
             </div>
           </React_Boostrap_Carousel>
         </div>

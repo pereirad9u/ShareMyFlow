@@ -213,10 +213,6 @@ i{
     height: 200px !important;
 }
 
-img {
-  width: 200px !important;
-  height: 200px !important;
-}
 
 label > input{ /* HIDE RADIO */
   visibility: hidden; /* Makes input not-clickable */
