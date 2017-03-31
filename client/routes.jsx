@@ -1,8 +1,6 @@
 import React from 'react';
 import {mount} from 'react-mounter';
 import { Meteor } from 'meteor/meteor';
-// load AppMain, App, and Channel React components
-// import AppMain from '../imports/ui/AppMain.jsx';
 import App from '../imports/ui/layouts/App.jsx';
 import ChannelListContainer from '../imports/ui/containers/ChannelListContainer.js';
 import Channel from '../imports/ui/Channel.jsx';
