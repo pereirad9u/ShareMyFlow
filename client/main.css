@@ -222,7 +222,30 @@ i{
     width: 200px !important;
     height: 200px !important;
 }
+
+
+label > input{ /* HIDE RADIO */
+  visibility: hidden; /* Makes input not-clickable */
+  position: absolute; /* Remove input from document flow */
+}
+label > input + img{ /* IMAGE STYLES */
+  cursor:pointer;
+  border:2px solid transparent;
+}
+label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+  border:2px solid #16FC1D;
+}
+
+#login-buttons a {
+  color: #dddddd;
+  text-decoration: none;
+}
+
+#login-buttons a:hover {
+  color: #ffffff;
+}
+
 .playlist_img{
     width: 150px !important;
     height: 150px !important;
-}
+

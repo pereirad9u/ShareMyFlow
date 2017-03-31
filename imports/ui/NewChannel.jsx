@@ -8,6 +8,7 @@ import SearchPlaylist from './components/SearchPlaylist.jsx';
 
 export default class NewChannel extends Component {
 
+
     setPlaylist(event) {
         this.playlist = event.target.value;
     }
@@ -25,38 +26,53 @@ export default class NewChannel extends Component {
         if (!this.props.loading) {
             let filteredPlaylist = this.props.playlist;
             return filteredPlaylist.map((playlist) => {
+                    return (
+                      <div className="col-md-3">
+                        <div className="container">
 
-                return (
-                    <div className="container" onChange={this.setPlaylist.bind(this)}>
+                            <h4>{playlist.name}</h4>
+                            <label>
+                              <input name="playlist" type="radio" id={playlist.id} ref="playlistInput" value={playlist.id} />
+                              
+                              {playlist.images[0] !== undefined ? <img className="playlist_img img-responsive img-thumbnail" alt={playlist.name} src={playlist.images[0].url}/>
+                              : <img className="img-responsive img-thumbnail" src="https://placehold.it/150x150"/>}
+                            </label>
 
-                        <h4>{playlist.name}</h4>
-                        {playlist.images[0] !== undefined ? <img className="playlist_img" alt={playlist.name} src={playlist.images[0].url}/>
-                            : <img src="https://placehold.it/150x150"/>}
-
-                        <input name="playlist"
-                               type="radio" id={playlist.id}
-                               ref="playlistInput" value={playlist.id}/>
-                    </div>
-                );
-            });
-        }
+                        </div>
+                      </div>
+                    );
+                });
+            }
     }
 
     render() {
         return (
             <div>
                 <form className="new-task" onSubmit={this.handleSubmit.bind(this)}>
-                    <input
+                  <div className="row">
+                    <div className="form-group col-md-4">
+                      <label for="newChannelTitle">Channel Title</label>
+                      <input
+                        id="newChannelTitle"
+                        className="form-control"
                         type="text"
                         ref="textInput"
-                        placeholder="Type to add new channels"
-                    />
-                    <div className="list-group">
-                        {this.renderPlaylist()}
+                        placeholder="Type the new of your new channel"
+                        />
                     </div>
+                  </div>
+                    <div className="row">
+                      {this.renderPlaylist()}
+                    </div>
+                    <div className="row">
+                      <div className="col-md-10">
+                      </div>
+                      <div className="col-md-2">
+                      <button className="btn btn-primary btn-lg" type="submit">Créer le channel</button>
+                      </div>
+                    </div>
+            </form>
 
-                    <button type="submit">Créer le channel</button>
-                </form>
 
             </div>
 
@@ -69,6 +85,7 @@ export default class NewChannel extends Component {
 
 
 NewChannel.propTypes = {
-    playlist: PropTypes.string.isRequired,
-    loading: PropTypes.bool
+    playlist:PropTypes.array.isRequired,
+    loading : PropTypes.bool
 };
+
