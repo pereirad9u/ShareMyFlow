@@ -5,6 +5,7 @@ import { Meteor } from 'meteor/meteor';
 // import AppMain from '../imports/ui/AppMain.jsx';
 import App from '../imports/ui/layouts/App.jsx';
 import ChannelListContainer from '../imports/ui/containers/ChannelListContainer.js';
+import HomeContainer from '../imports/ui/containers/HomeContainer.js';
 import Channel from '../imports/ui/Channel.jsx';
 import NewChannel from '../imports/ui/NewChannel.jsx';
 import ChannelContainer from '../imports/ui/ChannelContainer.js';
@@ -24,7 +25,7 @@ FlowRouter.route('/', {
               "profile.current_channel": null
           }
       });
-    mount(App, {content: <Home />});
+    mount(App, {content: <HomeContainer />});
   }
 });
 
