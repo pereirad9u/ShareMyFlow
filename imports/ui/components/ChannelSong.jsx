@@ -6,8 +6,6 @@ import classnames from 'classnames';
 // ChannelSong component - represents a single channelSong item
 export default class ChannelSong extends Component {
 
-    // let placeholder = document.createElement("li");
-    // placeholder.className = "placeholder";
     removeThisSongFromChannel() {
         Meteor.call('channelSongs.remove', this.props.channelSong._id);
     }//,
@@ -17,6 +15,7 @@ export default class ChannelSong extends Component {
     // }
     ratePlus() {
         Meteor.call('channelSongs.ratePlus', this.props.channelSong._id)
+
     }
 
     rateMoins() {
@@ -35,15 +34,9 @@ export default class ChannelSong extends Component {
             "list-group-item-action": true,
         });
 
-        const channelSongAnchorClasses = classnames({
-            "list-group-item": true,
-            "list-group-item-action": true,
-        });
-// console.log('channelSongDetails', this.props.channelSong);
         return (
             <li
                 key={channelSong._id}
-                data-id={channelSong._id}
                 className={channelSongClassName}
 
             >
@@ -61,7 +54,7 @@ export default class ChannelSong extends Component {
                         <i className="fa fa-sort-down" aria-hidden="true" onClick={this.rateMoins.bind(this)}></i>
                     </div>
                     <h2 className="title">{channelSong.trackName} by {channelSong.artistName}</h2>
-                    <p className="desc">Added by {channelSong.username}</p>
+                    <p className="desc">Added by <a href={'/profile/'+channelSong.owner}>{channelSong.username}</a></p>
                 </div>
             </li>
         );

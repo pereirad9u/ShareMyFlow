@@ -208,7 +208,65 @@ i{
     margin-right: 1%;
 }
 
+.state-icon {
+    left: -5px;
+}
+.list-group-item-primary {
+    color: rgb(255, 255, 255);
+    background-color: rgb(66, 139, 202);
+}
+
+.form-check>.form-check-label>.form-check-input {
+    margin-right: 10px;
+}
 .img-profile{
     width: 200px !important;
     height: 200px !important;
+}
+
+
+label > input{ /* HIDE RADIO */
+  visibility: hidden; /* Makes input not-clickable */
+  position: absolute; /* Remove input from document flow */
+}
+label > input + img{ /* IMAGE STYLES */
+  cursor:pointer;
+  border:2px solid transparent;
+}
+label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+  border:2px solid #16FC1D;
+}
+
+#login-buttons a {
+  color: #dddddd;
+  text-decoration: none;
+}
+
+#login-buttons a:hover {
+  color: #ffffff;
+}
+
+.playlist_img {
+    width: 150px !important;
+    height: 150px !important;
+
+}
+
+.slide{
+  background-repeat: no-repeat;
+  background-position: center;
+  height:350px;
+  width:100%;
+}
+
+#slide1{
+  background-image: url('http://mercymusic.org/wp-content/uploads/2013/04/outreach-slider-for-page.jpg');
+}
+
+#slide2{
+  background-image: url('http://www.warnerchappellpm.com/uploads/2015/05/PLAYLISTS-BANNER-REVOLUTION-SLIDER.jpg');
+}
+
+#slide3{
+  background-image: url('http://www.smartone-music.fr/wp-content/uploads/2013/06/Slider-Smartone-Music-4.jpg');
 }

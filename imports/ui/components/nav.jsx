@@ -1,11 +1,30 @@
 import React, {Component, PropTypes} from 'react';
 import {Meteor} from 'meteor/meteor';
-import classnames from 'classnames';
 
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 // Nav component - represents a fully styled nav bar
 export default class Nav extends Component {
+
+    renderNewChannel(context){
+      if(!this.props.loading){
+        if(this.props.currentUser !== null){
+          return (
+            <li>
+            <a href={FlowHelpers.pathFor('newchannel')}>New channel</a>
+            </li>);
+        }
+      }
+    }
+
+    renderUsername(context){
+      if(!this.props.loading){
+        if(context.props.currentUser !== null){
+          let username = context.props.currentUser.profile.display_name !== null?context.props.currentUser.profile.display_name:context.props.currentUser.profile.id
+          return username;
+        }
+      }
+    }
 
     render() {
         return (
@@ -22,9 +41,13 @@ export default class Nav extends Component {
                     </div>
                     <div className="collapse navbar-collapse" id="myNavbar">
                         <ul className="nav navbar-nav">
-                            <li><a href={FlowHelpers.pathFor('newchannel')}>New channel</a></li>
-                            <li><a href={FlowHelpers.pathFor('profile', {_id: Meteor.userId()}) }>Profile</a></li>
-                            <AccountsUIWrapper/>
+                            {this.renderNewChannel(this)}
+                            <li>
+                              <a href={FlowHelpers.pathFor('profile', {_id: Meteor.userId()}) }>
+                                {this.renderUsername(this)}
+                              </a>
+                            </li>
+                            <li><a><AccountsUIWrapper/></a></li>
                         </ul>
 
                     </div>
