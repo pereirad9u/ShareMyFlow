@@ -85,6 +85,7 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
+
         Channels.remove(taskId);
     },
     'channels.setChecked'(taskId, setChecked) {
