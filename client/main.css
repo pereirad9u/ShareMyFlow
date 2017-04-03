@@ -229,6 +229,16 @@ label > input{ /* HIDE RADIO */
   visibility: hidden; /* Makes input not-clickable */
   position: absolute; /* Remove input from document flow */
 }
+
+.input-fav{
+    visibility: visible;
+    position: inherit;
+}
+
+.input-fav:checked{
+    text-decoration: inherit;
+}
+
 label > input + img{ /* IMAGE STYLES */
   cursor:pointer;
   border:2px solid transparent;
