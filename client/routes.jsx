@@ -42,13 +42,13 @@ FlowRouter.route('/profile/:_id', {
 FlowRouter.route('/edit', {
     name: 'editprofile',
     action() {
-    if (!Meteor.user().profile.favorite){
+    //if (Meteor.user().profile.favorite !== undefined){
         Meteor.users.update(Meteor.userId(), {
             $set: {
                 "profile.favorite": "Favorite kind of music is not informed"
             }
         });
-    }
+    //}
         mount(App, {content: <EditContainer />});
     }
 });

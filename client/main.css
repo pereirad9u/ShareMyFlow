@@ -233,10 +233,15 @@ label > input{ /* HIDE RADIO */
 .input-fav{
     visibility: visible;
     position: inherit;
+    margin-right: 10px !important;
 }
 
 .input-fav:checked{
     text-decoration: inherit;
+}
+
+#btn-edit{
+  margin-top: 25px !important;
 }
 
 label > input + img{ /* IMAGE STYLES */
