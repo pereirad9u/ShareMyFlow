@@ -9,6 +9,8 @@ import HomeContainer from '../imports/ui/containers/HomeContainer.js';
 import ChannelContainer from '../imports/ui/ChannelContainer.js';
 import NewChannelContainer from '../imports/ui/NewChannelContainer.js';
 import ProfileContainer from '../imports/ui/ProfileContainer.js';
+import EditContainer from '../imports/ui/containers/EditContainer.js';
+
 import {SpotifyWebApi} from 'meteor/xinranxiao:spotify-web-api'
 
 
@@ -40,6 +42,13 @@ FlowRouter.route('/profile/:_id', {
 FlowRouter.route('/edit', {
     name: 'editprofile',
     action() {
+    if (!Meteor.user().profile.favorite){
+        Meteor.users.update(Meteor.userId(), {
+            $set: {
+                "profile.favorite": "Favorite kind of music is not informed"
+            }
+        });
+    }
         mount(App, {content: <EditContainer />});
     }
 });
@@ -58,12 +67,6 @@ FlowRouter.route('/newchannel', {
     }
 });
 
-// FlowRouter.route('/songs', {
-//   name: 'songs',
-//   action() {
-//     mount(App, {content: <Songs />});
-//   }
-// });
 
 FlowRouter.route('/channel/:_id', {
   name:'channel',
