@@ -84,8 +84,9 @@ export default class Channel extends Component {
 
         let currentChannel = context.props.channels[0];
 // console.log('searchresultsplaylist', currentChannel, "filteredSongs", filteredSongs);
-
+        let compteur= 0;
         return filteredChannelSongs.map((channelSong) => {
+            compteur++;
             //--------------this should be passed to the component as well for "who added this" validation
             const currentUserId = context.props.currentUser && context.props.currentUser._id;
 // console.log('iteratingSong', song);

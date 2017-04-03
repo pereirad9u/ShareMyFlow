@@ -8,8 +8,19 @@ export default class ChannelSong extends Component {
 
     removeThisSongFromChannel() {
         Meteor.call('channelSongs.remove', this.props.channelSong._id);
+    }//,
+    //
+    // togglePrivate() {
+    //   Meteor.call('tasks.setPrivate', this.props.task._id, ! this.props.task.private);
+    // }
+    ratePlus() {
+        Meteor.call('channelSongs.ratePlus', this.props.channelSong._id)
+
     }
 
+    rateMoins() {
+        Meteor.call('channelSongs.rateMoins', this.props.channelSong._id)
+    }
 
     render() {
 
@@ -27,6 +38,7 @@ export default class ChannelSong extends Component {
             <li
                 key={channelSong._id}
                 className={channelSongClassName}
+
             >
                 { Meteor.userId() === channelSong.owner ?
                     <span className="pull-right delete_song">
@@ -36,6 +48,11 @@ export default class ChannelSong extends Component {
         </span> : ""
                 }
                 <div className="info">
+                    <div>
+                        <i className="fa fa-sort-asc" aria-hidden="true" onClick={this.ratePlus.bind(this)}></i>
+                        <p>{channelSong.rate}</p>
+                        <i className="fa fa-sort-down" aria-hidden="true" onClick={this.rateMoins.bind(this)}></i>
+                    </div>
                     <h2 className="title">{channelSong.trackName} by {channelSong.artistName}</h2>
                     <p className="desc">Added by <a href={'/profile/'+channelSong.owner}>{channelSong.username}</a></p>
                 </div>
@@ -49,4 +66,5 @@ ChannelSong.propTypes = {
     // We can use propTypes to indicate it is required
     channel: PropTypes.object.isRequired,
     channelSong: PropTypes.object.isRequired,
+
 };

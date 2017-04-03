@@ -17,7 +17,10 @@ export default class NewChannel extends Component {
         event.preventDefault();
         // Find the text field via the React ref
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
-        Meteor.call('channels.insert', text, this.playlist);
+
+        const playlist = ReactDOM.findDOMNode(this.refs.playlistInput).value.trim();
+        Meteor.call('channels.insert', text, playlist);
+
         // Clear form
         ReactDOM.findDOMNode(this.refs.textInput).value = '';
     }
