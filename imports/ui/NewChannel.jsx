@@ -18,8 +18,8 @@ export default class NewChannel extends Component {
         // Find the text field via the React ref
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
 
-        const playlist = ReactDOM.findDOMNode(this.refs.playlistInput).value.trim();
-        Meteor.call('channels.insert', text, playlist);
+        //const playlist = ReactDOM.findDOMNode(this.refs.playlistInput).value.trim();
+        Meteor.call('channels.insert', text, this.playlist);
 
         // Clear form
         ReactDOM.findDOMNode(this.refs.textInput).value = '';
@@ -30,17 +30,18 @@ export default class NewChannel extends Component {
             let filteredPlaylist = this.props.playlist;
             return filteredPlaylist.map((playlist) => {
                     return (
-                      <div className="col-md-3">
+                      <div className="container col-md-3" onChange={this.setPlaylist.bind(this)}>
+
 
                             <h4>{playlist.name}</h4>
                             <label>
                               <input name="playlist" type="radio" id={playlist.id} ref="playlistInput" value={playlist.id} />
-                              
+
                               {playlist.images[0] !== undefined ? <img className="playlist_img img-responsive img-thumbnail" alt={playlist.name} src={playlist.images[0].url}/>
                               : <img className="img-responsive img-thumbnail" src={"https://placehold.it/150x150?text=playlist+"+playlist.name}/>}
                             </label>
 
-                        </div>
+                      </div>
                     );
                 });
             }
@@ -89,4 +90,3 @@ NewChannel.propTypes = {
     playlist:PropTypes.array.isRequired,
     loading : PropTypes.bool
 };
-
