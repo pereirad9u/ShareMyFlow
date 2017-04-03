@@ -64,9 +64,12 @@ Meteor.methods({
       //var playlist = channel[0].playlist;
       //console.log("id plaaaaaaaaylist");
       let response = spotifyApi.getPlaylistTracks("spotify", id, {});
-      let username = Meteor.user().profile.display_name !== null ? Meteor.user().profile.display_name : Meteor.user().profile.id;
+      let username =  Meteor.user().profile.id;
       console.log("test resp",response);
       if(response.data == undefined){
+          console.log("user 1", username)
+          console.log("id 1", id)
+
           response = spotifyApi.getPlaylistTracks(username, id, {});
           console.log("undef 1", response)
       }

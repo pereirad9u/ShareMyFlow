@@ -9,6 +9,8 @@ import HomeContainer from '../imports/ui/containers/HomeContainer.js';
 import ChannelContainer from '../imports/ui/ChannelContainer.js';
 import NewChannelContainer from '../imports/ui/NewChannelContainer.js';
 import ProfileContainer from '../imports/ui/ProfileContainer.js';
+import EditContainer from '../imports/ui/containers/EditContainer.js';
+
 import {SpotifyWebApi} from 'meteor/xinranxiao:spotify-web-api'
 
 
@@ -58,12 +60,6 @@ FlowRouter.route('/newchannel', {
     }
 });
 
-// FlowRouter.route('/songs', {
-//   name: 'songs',
-//   action() {
-//     mount(App, {content: <Songs />});
-//   }
-// });
 
 FlowRouter.route('/channel/:_id', {
   name:'channel',
