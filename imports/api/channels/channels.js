@@ -38,12 +38,12 @@ Meteor.methods({
         const nbChannel = Channels.find().count();
         let port = nbChannel;
         let username = Meteor.user().profile.display_name !== null ? Meteor.user().profile.display_name : Meteor.user().profile.id;
-        console.log(playlist);
+        console.log("TEst1 :",playlist);
         let playlists = [];
          Meteor.call('getPlaylistTracks',playlist, function (err, response) {
             playlists = response;
-            //console.log("erreur : ", err);
-            //console.log("Playlist ? :reponse : ", response);
+            console.log("erreur : ", err);
+            console.log("Playlist ? :reponse : ", response);
         });
          console.log("Playlist apres call",playlists)
         let date = new Date();
@@ -57,6 +57,7 @@ Meteor.methods({
             portServ: port,
         });
         let channel = Channels.findOne({},{sort: {createdAt: -1,limit : 1}});
+        console.log("channel",channel);
         HTTP.get("http://89.80.51.248:21080/index.php?0="+channel.portServ,function(){
             console.log("un truuuuuuuuuc",channel);
             channel.playlists.items.map(function (item) {

@@ -2,7 +2,7 @@ import {Meteor} from 'meteor/meteor';
 import {HTTP} from 'meteor/http';
 import {Mongo} from 'meteor/mongo';
 import {check} from 'meteor/check';
-import {Channels} from '../channels/channels.js';
+
 export const ChannelSongs = new Mongo.Collection('channelSongs');
 
 if (Meteor.isServer) {
@@ -14,7 +14,7 @@ if (Meteor.isServer) {
                 {private: {$ne: true}},
                 {owner: this.userId},
             ],
-        }, {sort: {rate: 1}});
+        }, {sort: {order: 1}});
     });
 }
 
@@ -35,8 +35,6 @@ Meteor.methods({
         text.channelId = channelId;
         text.createdAt = new Date();
         text.owner = this.userId;
-        text.rate = 0;
-        text.ratedBy=new Array();
         ChannelSongs.insert(
             text
         );
@@ -55,48 +53,11 @@ Meteor.methods({
         check(taskId, String);
 
         const task = ChannelSongs.findOne(taskId);
-        let channelCur = Channels.findOne(task.channelId);
         if (task.private && task.owner !== this.userId) {
             // If the task is private, make sure only the owner can delete it
             throw new Meteor.Error('not-authorized');
         }
-        let listSong = channelCur.playlists.items;
-        let place = 0;
-        while (listSong[place].id != taskId || place < listSong.length-1){
-            place ++;
-        }
-        HTTP.get("http://89.80.51.248:606"+channelCur.portServ+"/rmqueue/"+place);
+
         ChannelSongs.remove(taskId);
     },
-    'channelSongs.rateMoins'(trackId) {
-        check(trackId, String);
-        const track = ChannelSongs.findOne(trackId);
-        const user = Meteor.userId();
-        console.log(track);
-
-        if(track.ratedBy.includes(user)==false){
-            if(track.ratedBy-1 <= -10) {
-                ChannelSongs.remove(trackId)
-            }else{
-                track.rate--;
-
-                ChannelSongs.update(trackId,{ $set: {rate : track.rate}});
-                ChannelSongs.update(trackId,  {$push: {ratedBy : user}});
-                console.log(trackId);
-            }
-        }
-    },
-    'channelSongs.ratePlus'(trackId) {
-        check(trackId, String);
-        const track = ChannelSongs.findOne(trackId);
-        const user = Meteor.userId();
-        console.log(track);
-
-        if(track.ratedBy.includes(user)==false){
-                track.rate++;
-                ChannelSongs.update(trackId,{ $set: {rate : track.rate}});
-                ChannelSongs.update(trackId,  {$push: {ratedBy : user}});
-                console.log(trackId);
-        }
-    }
 });
