@@ -37,7 +37,7 @@ export default class ChannelSong extends Component {
                 }
                 <div className="info">
                     <h2 className="title">{channelSong.trackName} by {channelSong.artistName}</h2>
-                    <p className="desc">Added by {channelSong.username}</p>
+                    <p className="desc">Added by <a href={'/profile/'+channelSong.owner}>{channelSong.username}</a></p>
                 </div>
             </li>
         );
