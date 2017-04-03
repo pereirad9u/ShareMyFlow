@@ -9,7 +9,7 @@ export default class ChannelUser extends Component {
       return (
       <li className="list-group-item">
         <span className="text">
-          <strong>{username}</strong>
+          <strong><a href={'/profile/'+this.props.channelUser._id}>{username}</a></strong>
         </span>
       </li>
     );

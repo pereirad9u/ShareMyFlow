@@ -65,7 +65,7 @@ export default class ChannelChat extends Component {
 
 
                 <span className="text">
-                 <strong> {this.props.channelChat.username} </strong>: {this.props.channelChat.text}
+                 <strong> <a href={'/profile/'+this.props.channelChat.owner}>{this.props.channelChat.username}</a> </strong>: {this.props.channelChat.text}
                 </span>
                 <div style={ {float:"left", clear: "both"} } ref={(el) => { this.messagesEnd = el; }}></div>
             </li>

@@ -251,3 +251,22 @@ label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
     height: 150px !important;
 
 }
+
+.slide{
+  background-repeat: no-repeat;
+  background-position: center;
+  height:350px;
+  width:100%;
+}
+
+#slide1{
+  background-image: url('http://mercymusic.org/wp-content/uploads/2013/04/outreach-slider-for-page.jpg');
+}
+
+#slide2{
+  background-image: url('http://www.warnerchappellpm.com/uploads/2015/05/PLAYLISTS-BANNER-REVOLUTION-SLIDER.jpg');
+}
+
+#slide3{
+  background-image: url('http://www.smartone-music.fr/wp-content/uploads/2013/06/Slider-Smartone-Music-4.jpg');
+}

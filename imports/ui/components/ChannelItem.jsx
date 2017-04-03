@@ -47,7 +47,7 @@ export default class ChannelItem extends Component {
           <h4>{this.props.channel.text}</h4>
       </div>
       <div className='col-lg-12'>
-          <p>Create by {this.props.channel.username}, {day}</p>
+          <p>Create by <a href={'/profile/'+this.props.channel.owner}>{this.props.channel.username}</a>, {day}</p>
 
       </div>
       <a href={FlowHelpers.pathFor( 'channel', {_id: this.props.channel._id} )} className="btn btn-primary btn-join">Join</a>
