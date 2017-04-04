@@ -18,7 +18,7 @@ if (Meteor.isServer) {
         }, {sort: {order: 1}});
     });
 }
-let fait;
+
 Meteor.methods({
     'channelSongs.removeAllChannelSongs'() {
         ChannelSongs.remove({});
@@ -36,6 +36,9 @@ Meteor.methods({
         //text.channelId = channelId;
         text.createdAt = new Date();
         text.owner = this.userId;
+        text.order = order;
+        text.ratedBy = [];
+        text.rate =0;
         ChannelSongs.insert({
             text,
             channelId
@@ -75,6 +78,8 @@ Meteor.methods({
             text.createdAt = new Date();
             text.owner = Meteor.userId();
             text.order = order;
+            text.ratedBy = [];
+            text.rate =0;
             ChannelSongs.insert({
                 text,
                 channelId
@@ -158,14 +163,14 @@ Meteor.methods({
         const user = Meteor.userId();
         console.log(track);
 
-        if(track.ratedBy.includes(user)==false){
-            if(track.ratedBy-1 <= -10) {
+        if(track.text.ratedBy.includes(user)==false){
+            if(track.text.ratedBy-1 <= -10) {
                 ChannelSongs.remove(trackId)
             }else{
-                track.rate--;
+                track.text.rate--;
 
-                ChannelSongs.update(trackId,{ $set: {rate : track.rate}});
-                ChannelSongs.update(trackId,  {$push: {ratedBy : user}});
+                ChannelSongs.update(trackId,{ $set: {'text.rate' : track.text.rate}});
+                ChannelSongs.update(trackId,  {$push: {'text.ratedBy' : user}});
                 console.log(trackId);
             }
         }
@@ -176,10 +181,10 @@ Meteor.methods({
         const user = Meteor.userId();
         console.log(track);
 
-        if(track.ratedBy.includes(user)==false){
-            track.rate++;
-            ChannelSongs.update(trackId,{ $set: {rate : track.rate}});
-            ChannelSongs.update(trackId,  {$push: {ratedBy : user}});
+        if(track.text.ratedBy.includes(user)==false){
+            track.text.rate++;
+            ChannelSongs.update(trackId,{ $set: {'text.rate' : track.text.rate}});
+            ChannelSongs.update(trackId,  {$push: {'text.ratedBy' : user}});
             console.log(trackId);
         }
     },
