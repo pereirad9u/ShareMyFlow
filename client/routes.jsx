@@ -72,7 +72,7 @@ FlowRouter.route('/channel/:_id', {
     Session.set('searchVal','');
       Meteor.users.update(Meteor.userId(), {
           $set: {
-              "profile.current_channel": params._id
+              "profile.current_channel": params.id
           }
       });
     mount(App, {

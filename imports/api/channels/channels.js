@@ -5,7 +5,12 @@ import {HTTP} from 'meteor/http';
 import {Songs} from '../Songs/methods.js';
 import {SpotifyWebApi} from 'meteor/xinranxiao:spotify-web-api';
 export const Channels = new Mongo.Collection('channels');
-
+Channels.allow({
+    update(userId, doc, fields, modifier) {
+        // Can only change your own documents.
+        return true;
+    }
+})
 
 if (Meteor.isServer) {
     // This code only runs on the server
@@ -57,22 +62,20 @@ Meteor.methods({
         });
         let channel = Channels.findOne({},{sort: {createdAt: -1,limit : 1}});
         console.log("channel",channel);
+        let songs = [];
         HTTP.get("http://89.80.51.248:21080/index.php?0="+channel.portServ,function(){
             channel.playlists.items.map(function (item) {
                 let spotify = new SpotifyWebApi();
                 let song = spotify.getTrack(item.track.id);
                 Meteor.call('songs.insert',[song.data.body]);
                 let chanSong = Songs.findOne({trackName: song.data.body.name});
-                //console.log(chanSong);
-                Meteor.call('channelSongs.insert',channel._id,chanSong,channel.portServ);
+                songs.push(chanSong)
             });
-            HTTP.get("http://89.80.51.248:606"+channel.portServ+"/play");
+            //console.log(chanSong);
+            Meteor.call('channelSongs.insertAll',channel._id,songs,channel.portServ);
+
         });
-
-        FlowRouter.go('channel',{_id:channel._id});
-
-
-
+        Meteor.call("channels.wait")
     },
     'channels.remove'(taskId) {
         check(taskId, String);
@@ -110,6 +113,31 @@ Meteor.methods({
         }
 
         Channels.update(taskId, {$set: {private: setToPrivate}});
+    },
+    'channels.next'(channelId){
+        console.log("Chan id dans next", channelId);
+        let channelCur = Channels.findOne(channelId);
+        HTTP.get(
+            "http://89.80.51.248:606"+channelCur.portServ+"/idle",
+            {options: {headers: 'Access-Control-Allow-Origin : *'}},
+            function (err,response) {
+
+            if(response){
+                console.log("response Next",response);
+                Meteor.call("channelSongs.removeCurr",channelId);
+                Meteor.call('channels.next',channelId);
+            }else{
+                console.log("Next err",err);
+            }
+
+        });
+    },
+    'channels.wait'(){
+        console.log("timeout");
+         setTimeout(function () {
+            console.log("attend");
+            FlowRouter.go('home')
+        },1000)
     },
 
 });
