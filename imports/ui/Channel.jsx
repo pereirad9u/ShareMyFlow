@@ -134,7 +134,7 @@ export default class Channel extends Component {
             const user = currentChannel.username;
 
             return (
-                <h3 className="title-channel">Channel {name},<br/> by {user} :</h3>
+                <h3 className="title-channel" style={{marginBottom:"20px"}}>Channel {name}, by {user} :</h3>
             )
 
         }
@@ -145,7 +145,7 @@ export default class Channel extends Component {
         if (!this.props.loading) {
             return(
                 <audio src={"http://89.80.51.248:800" + this.props.channels[0].portServ} autoPlay="autoPlay"
-                       controls="controls" preload="none"></audio>
+                        preload="none"></audio>
             )
         }
     }
@@ -162,7 +162,7 @@ export default class Channel extends Component {
                                     Music waiting list
                                 </h3>
                             </div>
-                            <div className="panel-body">
+                            <div className="panel-body panel-chat">
                                 <ul
                                     className="event-list"
                                     onDragOver={this.dragOver}
@@ -186,22 +186,22 @@ export default class Channel extends Component {
                             <div className="panel-body panel-chat">
                                 <ul className="list-group">
                                     {this.renderChat(this)}
-                                    { this.props.currentUser ?
-                                        <li className="list-group-item">
-                                            <form className="form-group" onSubmit={this.handleSubmit.bind(this)}>
-                                                <div className="input-group">
-                                                    <span className="input-group-addon">New message</span>
-                                                    <input
-                                                        className="form-control"
-                                                        type="text"
-                                                        ref="textInput"
-                                                        placeholder="Entrer un message"
-                                                    />
-                                                </div>
-                                            </form>
-                                        </li> : ''
-                                    }
+
                                 </ul>
+                                { this.props.currentUser ?
+                                            <form className="form-group" onSubmit={this.handleSubmit.bind(this)}>
+                                            <div className="input-group">
+                                                <span className="input-group-addon">New message</span>
+                                                <input
+                                                    className="form-control"
+                                                    type="text"
+                                                    ref="textInput"
+                                                    placeholder="Entrer un message"
+                                                />
+                                            </div>
+                                        </form>
+                                   : ''
+                                }
                             </div>
                         </div>
                     </div>
@@ -211,7 +211,7 @@ export default class Channel extends Component {
                             <div className="panel-heading">
                                 <h3 className="panel-title">User list !!</h3>
                             </div>
-                            <div className="panel-body">
+                            <div className="panel-body panel-chat">
                                 <ul className="list-group">
                                     {this.renderUsers()}
                                 </ul>
