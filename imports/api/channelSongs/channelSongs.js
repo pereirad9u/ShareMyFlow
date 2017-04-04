@@ -33,12 +33,20 @@ Meteor.methods({
         }
 
         text.username = Meteor.user().profile.display_name !== null ? Meteor.user().profile.display_name : Meteor.user().profile.id;
-        text.channelId = channelId;
+        //text.channelId = channelId;
         text.createdAt = new Date();
         text.owner = this.userId;
-        ChannelSongs.insert(
-            text
-        );
+        ChannelSongs.insert({
+            text,
+            channelId
+        },function(err, res){
+          if(err){
+            console.log("erreur", err );
+          }
+          if (res){
+            console.log("result", res);
+          }
+        });
         //ne faites pas sa chez vous
         HTTP.post("http://89.80.51.248:606" + channelPort + "/add", {
             data: {"entry": text.url},

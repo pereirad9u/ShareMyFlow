@@ -40,7 +40,7 @@ export default class ChannelSong extends Component {
                 className={channelSongClassName}
 
             >
-                { Meteor.userId() === channelSong.owner ?
+                { Meteor.userId() === channelSong.text.owner && channelSong.text.order != 1 ?
                     <span className="pull-right delete_song">
           <button className="btn btn-xs btn-danger" onClick={this.removeThisSongFromChannel.bind(this)}>
             &times;
@@ -48,13 +48,14 @@ export default class ChannelSong extends Component {
         </span> : ""
                 }
                 <div className="info">
-                    <div>
+                    { channelSong.text.order != 1 ?
+                    <div className="col-md-2">
                         <i className="fa fa-sort-asc" aria-hidden="true" onClick={this.ratePlus.bind(this)}></i>
-                        <p>{channelSong.rate}</p>
+                        <p>{channelSong.text.rate}</p>
                         <i className="fa fa-sort-down" aria-hidden="true" onClick={this.rateMoins.bind(this)}></i>
-                    </div>
-                    <h2 className="title">{channelSong.trackName} by {channelSong.artistName}</h2>
-                    <p className="desc">Added by <a href={'/profile/'+channelSong.owner}>{channelSong.username}</a></p>
+                    </div>: ""}
+                    <h2 className="title">{channelSong.text.trackName} by {channelSong.text.artistName}</h2>
+                    <p className="desc">Added by <a href={'/profile/'+channelSong.text.owner}>{channelSong.text.username}</a></p>
                 </div>
             </li>
         );

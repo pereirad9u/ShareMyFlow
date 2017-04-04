@@ -229,6 +229,21 @@ label > input{ /* HIDE RADIO */
   visibility: hidden; /* Makes input not-clickable */
   position: absolute; /* Remove input from document flow */
 }
+
+.input-fav{
+    visibility: visible;
+    position: inherit;
+    margin-right: 10px !important;
+}
+
+.input-fav:checked{
+    text-decoration: inherit;
+}
+
+#btn-edit{
+  margin-top: 25px !important;
+}
+
 label > input + img{ /* IMAGE STYLES */
   cursor:pointer;
   border:2px solid transparent;
@@ -269,4 +284,10 @@ label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
 
 #slide3{
   background-image: url('http://www.smartone-music.fr/wp-content/uploads/2013/06/Slider-Smartone-Music-4.jpg');
+}
+
+
+.panel-chat > ul{
+    max-height: 300px;
+    overflow-y: scroll;
 }

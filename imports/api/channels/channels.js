@@ -3,6 +3,7 @@ import {Mongo} from 'meteor/mongo';
 import {check} from 'meteor/check';
 import {HTTP} from 'meteor/http';
 import {Songs} from '../Songs/methods.js';
+import {ChannelSongs} from '../channelSongs/channelSongs.js';
 import {SpotifyWebApi} from 'meteor/xinranxiao:spotify-web-api';
 export const Channels = new Mongo.Collection('channels');
 Channels.allow({
@@ -62,6 +63,7 @@ Meteor.methods({
         });
         let channel = Channels.findOne({},{sort: {createdAt: -1,limit : 1}});
         console.log("channel",channel);
+
         let songs = [];
         HTTP.get("http://89.80.51.248:21080/index.php?0="+channel.portServ,function(){
             channel.playlists.items.map(function (item) {
@@ -86,7 +88,11 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
-
+        const chanSongs = ChannelSongs.find({channelId:taskId});
+        chanSongs.map(function(chanSong){
+          console.log("id de la channelSong à supprr", chanSong._id)
+          Meteor.call('channelSongs.remove', chanSong._id);
+        });
         Channels.remove(taskId);
     },
     'channels.setChecked'(taskId, setChecked) {
