@@ -58,26 +58,31 @@ Meteor.methods({
         })
 
     },
-    'channelSongs.insertAll'(channelId, text, channelPort) {
+    'channelSongs.insertAll'(channelId, data, channelPort) {
         check(channelId, String);
-        check(text, Array);
+        check(data, Array);
 
         // Make sure the user is logged in before inserting a task
         if (!this.userId) {
             throw new Meteor.Error('not-authorized');
         }
         let liens =[];
-        text.map(function (item) {
-            item.username = Meteor.user().profile.display_name !== null ? Meteor.user().profile.display_name : Meteor.user().profile.id;
-            item.channelId = channelId;
-            item.createdAt = new Date();
-            item.owner = this.userId;
-            ChannelSongs.insert(
-                item
-            );
-            if(item.url != null){
-                liens.push(item.url)
+        let order = 1;
+        console.log("on s'apprete à inserer dans channelSongs ça :", data);
+        data.map(function (text) {
+            console.log("la on insert dans channelSongs");
+            text.username = Meteor.user().profile.display_name !== null ? Meteor.user().profile.display_name : Meteor.user().profile.id;
+            text.createdAt = new Date();
+            text.owner = Meteor.userId();
+            text.order = order;
+            ChannelSongs.insert({
+                text,
+                channelId
+            });
+            if(text.url != null){
+                liens.push(text.url)
             }
+            order++;
 
         });
         let channel = Channels.findOne(channelId);
