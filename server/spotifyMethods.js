@@ -49,7 +49,6 @@ Meteor.methods({
 
     getSavedPlaylists: function () {
         var spotifyApi = new SpotifyWebApi();
-        //console.log("loooooooooool",spotifyApi);
         var response = spotifyApi.getUserPlaylists(Meteor.user().services.spotify.id, {});
         console.log(response);
         if (checkTokenRefreshed(response, spotifyApi)) {

@@ -22,14 +22,23 @@ export default class EditProfile extends Component {
             }
             i++;
         }
-        fav = fav.substr(0, fav.length - 2)
-        Meteor.users.update(Meteor.userId(), {
-            $set: {
-                "profile.favorite": fav
-            }
-        });
-
+        fav = fav.substr(0, fav.length - 2);
+        if (fav ==! ""){
+            Meteor.users.update(Meteor.userId(), {
+                $set: {
+                    "profile.favorite": fav
+                }
+            });
+        }else {
+            Meteor.users.update(Meteor.userId(), {
+                $set: {
+                    "profile.favorite": "Favorite kind of music is not informed"
+                }
+            });
+        }
         FlowRouter.go('profile', {_id:Meteor.userId()});
+
+
     }
 
     renderMusicGender(context){
