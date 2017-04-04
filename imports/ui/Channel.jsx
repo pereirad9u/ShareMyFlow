@@ -83,6 +83,7 @@ export default class Channel extends Component {
         let filteredChannelSongs = context.props.channelSong;
 
         let currentChannel = context.props.channels[0];
+        console.log("Voila les ChannelSongs de la channel",filteredChannelSongs);
 // console.log('searchresultsplaylist', currentChannel, "filteredSongs", filteredSongs);
         let compteur= 0;
         return filteredChannelSongs.map((channelSong) => {
