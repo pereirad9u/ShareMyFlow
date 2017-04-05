@@ -72,7 +72,7 @@ export default class EditProfile extends Component {
                                         <div ref="genderInput">
                                         {this.renderMusicGender(this)}
                                         </div>
-                                        <input id="btn-edit" type="submit" className="btn btn-primary col-md-2 col-md-offset-9"
+                                        <input id="btn" type="submit" className="btn btn-edit col-md-2 col-md-offset-9"
                                                value="Valid"/>
                                     </form>
                                 </div>
