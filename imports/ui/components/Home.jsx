@@ -38,8 +38,8 @@ export default class Home extends Component {
           </p>
           { Meteor.userId() ?
             <div>
-            <div className="col-lg-12 head"><h1>Channel list : <a
-            className="btn icon-btn btn-primary pull-right" href={FlowHelpers.pathFor('newchannel')}>Create
+            <div className="col-lg-12 head"><h1>Channel list : <a id="btn"
+            className="btn icon-btn pull-right" href={FlowHelpers.pathFor('newchannel')}>Create
             new channel</a></h1></div>
             <ChannelListContainer />
             </div>
