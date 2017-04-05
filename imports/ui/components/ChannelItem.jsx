@@ -50,7 +50,7 @@ export default class ChannelItem extends Component {
           <p>Create by <a href={'/profile/'+this.props.channel.owner}>{this.props.channel.username}</a>, {day}</p>
 
       </div>
-      <a href={FlowHelpers.pathFor( 'channel', {_id: this.props.channel._id} )} className="btn btn-primary btn-join">Join</a>
+      <a id="btn" href={FlowHelpers.pathFor( 'channel', {_id: this.props.channel._id} )} className="btn btn-join">Join</a>
               { owner ? <a onClick={this.deleteThisChannel.bind(this)} className="btn btn-danger">Delete</a>:''}
 
           </div>

@@ -70,7 +70,7 @@ export default class NewChannel extends Component {
                       <div className="col-md-10">
                       </div>
                       <div className="col-md-2">
-                      <button className="btn btn-primary btn-lg" type="submit">Créer le channel</button>
+                      <button id="btn" className="btn btn-lg" type="submit">Créer le channel</button>
                       </div>
                     </div>
             </form>

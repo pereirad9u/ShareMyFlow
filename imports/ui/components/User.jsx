@@ -52,9 +52,9 @@ export default class User extends Component {
                                     </table>
                                     <div className="col-md-offset-8">
                                         {this.props.user.profile.current_channel != null ?
-                                            <div><a href={"/channel/" + this.props.user.profile.current_channel}
-                                               className="btn btn-primary col-md-offset-1">Join in room</a><a href={uriSpotify} className="btn btn-primary" target="_blank">See on
-                                            Spotify</a></div> : <a href={uriSpotify} className="btn btn-primary col-md-offset-5" target="_blank">See on
+                                            <div><a id="btn" href={"/channel/" + this.props.user.profile.current_channel}
+                                               className="btn col-md-offset-1">Join in room</a><a id="btn" href={uriSpotify} className="btn" target="_blank">See on
+                                            Spotify</a></div> : <a id="btn" href={uriSpotify} className="btn col-md-offset-5" target="_blank">See on
                                             Spotify</a> }
                                     </div>
                                 </div>
