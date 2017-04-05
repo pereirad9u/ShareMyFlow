@@ -48,6 +48,7 @@ Meteor.methods({
         let playlists = [];
          Meteor.call('getPlaylistTracks',playlist, function (err, response) {
             playlists = response;
+            console.log(playlists)
             console.log("erreur : ", err);
             console.log("Playlist ? :reponse : ", response);
         });
@@ -88,9 +89,10 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
-        const chanSongs = ChannelSongs.find({channelId:taskId});
+        const chanSongs = ChannelSongs.find({channelId:taskId}).fetch();
         chanSongs.map(function(chanSong){
-          console.log("id de la channelSong à supprr", chanSong._id)
+          console.log("id de la channelSong à supprr", chanSong._id);
+
           Meteor.call('channelSongs.remove', chanSong._id);
         });
         Channels.remove(taskId);
@@ -120,7 +122,7 @@ Meteor.methods({
 
         Channels.update(taskId, {$set: {private: setToPrivate}});
     },
-    'channels.next'(channelId){
+    'channels.next'(channelId,first = false){
         console.log("Chan id dans next", channelId);
         let channelCur = Channels.findOne(channelId);
         HTTP.get(
@@ -128,14 +130,13 @@ Meteor.methods({
             {options: {headers: 'Access-Control-Allow-Origin : *'}},
             function (err,response) {
 
-            if(response){
+            if(response && first){
                 console.log("response Next",response);
                 Meteor.call("channelSongs.removeCurr",channelId);
-                Meteor.call('channels.next',channelId);
+                Meteor.call('channels.next',channelId,true);
             }else{
-                console.log("Next err",err);
+                Meteor.call('channels.next',channelId,true);
             }
-
         });
     },
     'channels.wait'(){
@@ -143,7 +144,7 @@ Meteor.methods({
          setTimeout(function () {
             console.log("attend");
             FlowRouter.go('home')
-        },1000)
+        },3000)
     },
 
 });

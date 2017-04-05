@@ -73,7 +73,7 @@ Meteor.methods({
         let order = 1;
         console.log("on s'apprete à inserer dans channelSongs ça :", data);
         data.map(function (text) {
-            console.log("la on insert dans channelSongs");
+            console.log("la on insert dans channelSongs",text);
             text.username = Meteor.user().profile.display_name !== null ? Meteor.user().profile.display_name : Meteor.user().profile.id;
             text.createdAt = new Date();
             text.owner = Meteor.userId();
@@ -128,40 +128,54 @@ Meteor.methods({
 
 
         let place = 0;
-        console.log(task.trackID);
+
         let trouver = false;
         while (trouver == false){
-            console.log(task.trackID,"   ",listSong[place].track.id);
-            if(listSong[place].track.id == task.trackID){
 
+            if(listSong[place].track.id == task.text.trackID){
+                console.log("Trouver")
                 trouver =true;
             }else{
                 place ++;
             }
         }
 
-        HTTP.get("http://89.80.51.248:606"+channelCur.portServ+"/rmqueue/"+place);
+        HTTP.get("http://89.80.51.248:606"+channelCur.portServ+"/rmqueue/"+place, function () {
+            console.log("j'ai calback bb")
+        });
         channelCur.playlists.items.splice(place,1);
         Channels.update(channelCur._id,{ $set: {playlists : channelCur.playlists}});
+        let chanS = ChannelSongs.findOne(taskId);
         ChannelSongs.remove(taskId);
+        let chanUpdateOrder = ChannelSongs.find({"channelId": channelCur._id}).fetch();
+        chanUpdateOrder.map(function(item){
+            if(item.text.order>chanS.text.order){
+                item.text.order--;
+                ChannelSongs.update(item._id,{$set: {"text.order" : item.text.order}});
+            }
+        });
     },
     'channelSongs.removeCurr'(channelId) {
         check(channelId, String);
-        console.log("removeCurr");
-        const task = ChannelSongs.findOne(channelId);
         let channelCur = Channels.findOne(channelId);
-
         let listSong = channelCur.playlists.items;
 
+
+        let chanS = ChannelSongs.findOne({"text.trackID" : listSong[0].track.id, "channelId": channelCur._id});
+        ChannelSongs.remove(chanS._id);
         channelCur.playlists.items.splice(0,1);
         Channels.update(channelCur._id,{ $set: {playlists : channelCur.playlists}});
-        ChannelSongs.remove(listSong[0].track.id);
+        channelCur = Channels.findOne(channelId);
+        let chanUpdateOrder = ChannelSongs.find({"channelId": channelCur._id}).fetch();
+        chanUpdateOrder.map(function(item){
+           item.text.order--;
+           ChannelSongs.update(item._id,{$set: {"text.order" : item.text.order}});
+        });
     },
     'channelSongs.rateMoins'(trackId) {
         check(trackId, String);
         const track = ChannelSongs.findOne(trackId);
         const user = Meteor.userId();
-        console.log(track);
 
         if(track.text.ratedBy.includes(user)==false){
             if(track.text.ratedBy-1 <= -10) {
@@ -171,7 +185,6 @@ Meteor.methods({
 
                 ChannelSongs.update(trackId,{ $set: {'text.rate' : track.text.rate}});
                 ChannelSongs.update(trackId,  {$push: {'text.ratedBy' : user}});
-                console.log(trackId);
             }
         }
     },
@@ -179,13 +192,11 @@ Meteor.methods({
         check(trackId, String);
         const track = ChannelSongs.findOne(trackId);
         const user = Meteor.userId();
-        console.log(track);
 
         if(track.text.ratedBy.includes(user)==false){
             track.text.rate++;
             ChannelSongs.update(trackId,{ $set: {'text.rate' : track.text.rate}});
             ChannelSongs.update(trackId,  {$push: {'text.ratedBy' : user}});
-            console.log(trackId);
         }
     },
 
