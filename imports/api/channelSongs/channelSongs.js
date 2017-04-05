@@ -31,12 +31,16 @@ Meteor.methods({
         if (!this.userId) {
             throw new Meteor.Error('not-authorized');
         }
-
+        let chan = Channels.findOne(channelId);
+        let order;
+        chan.playlists.items.map(function(){
+            order++;
+        });
         text.username = Meteor.user().profile.display_name !== null ? Meteor.user().profile.display_name : Meteor.user().profile.id;
         //text.channelId = channelId;
         text.createdAt = new Date();
         text.owner = this.userId;
-        text.order = order;
+        text.order = order+1;
         text.ratedBy = [];
         text.rate =0;
         ChannelSongs.insert({

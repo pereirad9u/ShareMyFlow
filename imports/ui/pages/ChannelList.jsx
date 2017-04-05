@@ -37,11 +37,6 @@ export default class ChannelList extends Component {
             <div className="componentWrapper">
                 <ul>
                     {this.renderChannels()}
-                    {/*{ this.props.currentUser ?
-                     <div className="col-lg-12 head"><h1>Channel list : <a className="btn icon-btn btn-primary pull-right" href={FlowHelpers.pathFor( 'newchannel' )}>Create new channel</a></h1></div>
-
-                     : <div className="col-lg-12 head"><h1>Channel list</h1></div>
-                     }*/}
                 </ul>
             </div>
 

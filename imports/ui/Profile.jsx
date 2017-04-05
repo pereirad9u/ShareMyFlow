@@ -13,12 +13,12 @@ export default class Profile extends Component {
     }
 
     renderChannels(context) {
-        if (context.props.loading) {
+        if (context.props.loading ) {
             let username = this.props.user.profile.display_name !== null ? this.props.user.profile.display_name : this.props.user.profile.id;
             return (
                 <div>
                     <h3>{username}'s channels :</h3><br/>
-                    <ChannelListContainer />
+                    <ChannelListProfilContainer />
                 </div>)
         }
     }
@@ -38,5 +38,5 @@ export default class Profile extends Component {
 
 Profile.propTypes = {
     user: PropTypes.object,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
 };
